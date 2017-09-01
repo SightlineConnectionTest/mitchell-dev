@@ -1,0 +1,994 @@
+<apex:page standardController="Release__c" title="Slingshot" extensions="SlingshotControllerExt2" docType="html-5.0" sidebar="false" action="{!handleOAuthRedirect}">
+<c:Tracking title="Slingshot" appName="PM - Slingshot"/>
+
+<apex:stylesheet value="{!URLFOR($Resource.zip_alm_pm, 'external/css/jquery-ui.css')}" />
+<apex:stylesheet value="{!URLFOR($Resource.zip_alm_pm, 'css/bootstrap-override.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.zip_alm_pm, 'css/alm_common.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.zip_alm_pm, 'css/slingshot2.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.zip_slds_203, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+<script type="text/javascript">
+    var __sfdcSessionId = '{!GETSESSIONID()}';
+</script>
+<script src="/soap/ajax/33.0/connection.js" type="text/javascript"></script>
+
+<script src="{!$Resource.js_hogan}"></script>
+<script src="{!URLFOR($Resource.zip_alm_pm, 'js/templates.js')}" ></script>
+
+<c:RequireJS initScript="slingshot/slingshot_main.js" />
+
+<script type="text/javascript">
+
+    function remoteGetDeployments( releaseId, callback ) {
+      Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.SlingshotControllerExt2.getSavedDeployments}',
+        releaseId,
+        function(savedDeployments, event) {
+          if(event.status) {
+            callback(null, savedDeployments);
+          } else {
+            callback(event.message, null);
+          }
+        },
+        {escape: true}
+      );
+    }
+
+    function remoteGetProfileTemplate( instanceNames, callback ) {
+      Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.SlingshotControllerExt2.getProfileTemplate}',
+        instanceNames,
+        callback,
+        {
+          escape: true,
+          timeout: 120000
+        }
+      );
+    }
+
+
+    function remoteGetAuthStatus( instanceId, callback ) {
+      Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.SlingshotControllerExt2.getAuthInfo}',
+        instanceId,
+        callback,
+        {escape: true}
+      );
+    }
+
+    function remoteCreateDeployment( params, /*deployName, sourceInstanceId, targetInstanceId, isManual,*/ callback ) {
+      Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.SlingshotControllerExt2.createDeployment}',
+        '{!Release__c.Id}',
+        params.deployName,
+        params.sourceId,
+        params.targetId,
+        params.isManual,
+        function(deployment, event) {
+          if(event.status) {
+            callback(null, deployment);
+          } else {
+            callback(event.message, null);
+          }
+        },
+        {escape: true}
+      );
+    }
+
+    function remoteUpdatePackageURL( buildId, attachmentId, callback ) {
+      Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.SlingshotControllerExt2.updateBuildPackageURL}',
+        buildId,
+        attachmentId,
+        function(result, event) {
+          if(event.status) {
+            callback(null);
+          } else {
+            callback(event.message);
+          }
+        },
+        {escape: true}
+      );
+    }
+
+    function remoteHandleUpdatePackageUrlFailure( buildId, callback ) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.SlingshotControllerExt2.handleUpdatePackageUrlFailure}',
+            buildId,
+            callback,
+            {escape: true}
+        );
+    }
+
+    function checkBuildStatus( buildId, callback ) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.SlingshotControllerExt2.checkBuildStatus}',
+            buildId,
+            callback,
+            {escape: true}
+        );
+    }
+
+    function getUpdatedDeployment( buildId, callback ) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.SlingshotControllerExt2.getUpdatedDeployment}',
+            buildId,
+            callback,
+            {escape: true}
+        );
+    }
+
+    function getBuildErrors( buildId, callback ) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.SlingshotControllerExt2.getBuildErrors}',
+            buildId,
+            callback,
+            {escape: true}
+        );
+    }
+</script>
+
+<div id="alm-container" data-ie-only-css="{!URLFOR($Resource.zip_alm_pm, 'css/slingshot2-ie-only.css')}">
+  <apex:form id="form">
+  <apex:actionFunction name="afAuthorizeInstance" action="{!authorizeInstance}" rerender="msgs" >
+    <apex:param name="selectedInstanceId" value="" assignTo="{!selectedInstanceId}"/>
+  </apex:actionFunction>
+
+  <apex:actionFunction name="afStartAssembler" action="{!startAssembler}" rerender="msgs, deployment-errors-apex-panel, deployment-errors-component-panel, deployment-errors-build-panel, deployment-errors-coverage-panel"
+                        oncomplete="BW.requestManager.completeFunction();" >
+    <apex:param name="isValidation" value="" assignTo="{!isValidation}"/>
+  </apex:actionFunction>
+
+  <apex:actionFunction name="afFinishBuild" action="{!finishBuild}"
+                        rerender="msgs, deployment-errors-apex-panel, deployment-errors-component-panel, deployment-errors-build-panel, hidden-input-wrapper, deployment-errors-coverage-panel"
+                        oncomplete="BW.requestManager.completeFunction();" />
+
+  <apex:actionFunction name="afLoadDeployment"
+                        action="{!loadDeployment}"
+                        reRender="msgs, hidden-input-wrapper, manifest-alert-panel, manifest-body-wrapper, slingshot-detail, deployment-errors-apex-panel, deployment-errors-component-panel, deployment-errors-build-panel, deployment-errors-coverage-panel"
+                        oncomplete="BW.requestManager.completeFunction();">
+    <apex:param name="deploymentId" value="" assignTo="{!selectedDeploymentId}"/>
+  </apex:actionFunction>
+
+  <apex:actionFunction name="afFinishDeployment" action="{!loadDeployment}" reRender="msgs, hidden-input-wrapper, manifest, deployment-errors-apex-panel, deployment-errors-component-panel,
+                                                        deployment-errors-build-panel, deployment-errors-coverage-panel" oncomplete="BW.requestManager.completeFunction();">
+    <apex:param name="deploymentId" value="" assignTo="{!selectedDeploymentId}"/>
+  </apex:actionFunction>
+
+  <apex:actionFunction name="afSaveAsDeployment" action="{!saveAsDeployment}" rerender="msgs, hidden-input-wrapper, manifest-alert-panel, manifest-body-wrapper" oncomplete="BW.requestManager.completeFunction();">
+    <apex:param name="clientDataBundle" value="" assignTo="{!serializedClientDataBundle}"/>
+  </apex:actionFunction>
+  <apex:actionFunction name="afSaveDeployment" action="{!saveDeployment}" rerender="msgs, hidden-input-wrapper, manifest-alert-panel, manifest-body-wrapper" oncomplete="BW.requestManager.completeFunction();">
+    <apex:param name="clientDataBundle" value="" assignTo="{!serializedClientDataBundle}"/>
+  </apex:actionFunction>
+  <apex:actionFunction name="afLoadManifest" action="{!loadManifest}" rerender="msgs, manifest-body-wrapper" oncomplete="BW.requestManager.completeFunction();" />
+  <apex:actionFunction name="afFilterManifest" action="{!assembler.filterManifest}" oncomplete="BW.requestManager.completeFunction();" rerender="msgs, manifest-detail" />
+  <apex:actionFunction name="afAddUndocumentedComponents" action="{!assembler.addUndocumentedComponents}" rerender="manifest-detail, msgs, profile-manifest" oncomplete="BW.requestManager.completeFunction();" >
+    <apex:param name="selectedComponentIdString" value="" assignTo="{!assembler.selectedComponentIdString}"/>
+  </apex:actionFunction>
+  <apex:actionFunction name="afRemoveUndocumentedComponents" action="{!assembler.removeUndocumentedComponents}" rerender="msgs, profile-manifest" oncomplete="BW.requestManager.completeFunction();" >
+    <apex:param name="selectedComponentIdString" value="" assignTo="{!assembler.selectedComponentIdString}"/>
+  </apex:actionFunction>
+
+  <apex:actionFunction name="afRemoveComponentProfileData" action="{!assembler.removeComponentProfileData}" rerender="msgs, profile-manifest, manifest-body-wrapper" oncomplete="BW.requestManager.completeFunction();" />
+
+  <apex:actionFunction name="afGetDeploymentErrors"
+                       action="{!getDeploymentErrors}"
+                       rerender="msgs, deployment-errors-apex-panel, deployment-errors-component-panel, deployment-errors-build-panel, deployment-errors-coverage-panel"
+                       oncomplete="BW.requestManager.completeFunction();" />
+  <apex:actionFunction name="afSyncManifest" action="{!syncManifest}" reRender="msgs, manifest-alert-panel, manifest" oncomplete="BW.requestManager.completeFunction();" />
+  <apex:actionFunction name="afCancelDeployment" action="{!cancelDeployment}" rerender="msgs" oncomplete="BW.requestManager.completeFunction();" />
+
+  <apex:actionFunction name="afValidateAuth" action="{!validateAuth}" rerender="msgs, hidden-input-wrapper" oncomplete="BW.requestManager.completeFunction();"/>
+
+  <apex:actionFunction name="afRemovePageMessage" action="{!removePageMessage}" rerender="msgs" oncomplete="BW.requestManager.completeFunction();">
+    <apex:param name="pageMessageToRemove" assignTo="{!pageMessageToRemove}" value="" />
+  </apex:actionFunction>
+
+  <apex:inputHidden value="{!release.Id}" id="release-id"/>
+  <apex:inputHidden value="{!serializedClientDataBundle}" id="client-data-bundle"/>
+  <apex:inputHidden value="{!validateDeployInProgress}" id="validate-deploy-in-progress" />
+
+  <apex:outputpanel id="msgs" styleClass="msg-panel">
+    <c:PageMessages messages="{!pageMessageManager.messages}" />
+  </apex:outputpanel>
+    <c:HeaderRibbon title="Release {!Release__c.Name}" homeUrl="/{!Release__c.Id}" homeLinkTitle="{!Release__c.Name}" />
+
+    <c:UserVoice ></c:UserVoice>
+
+    <div class="alm-container-body">
+      <apex:outputPanel layout="block" styleClass="page-block-panel-section instance-list" id="instance-list" rendered="{!displaySlingshot}">
+        <div class="page-block-panel-section-header" >
+          <span class="instance-count">{!instancesCount}</span> Instances
+        </div>
+        <div id="instance-panel" class="page-block-panel-section-body clearfix" >
+          <apex:repeat value="{!instances}" var="instance">
+           <div class="instance-card panel-tile" data-id="{!instance.Id}" data-name="{!instance.Name}" data-type="{!instance.Type__c}">
+             <div class="handle"></div>
+             <span class="name" title="{!instance.Name}">{!instance.Name}</span>
+           </div>
+          </apex:repeat>
+        </div>
+      </apex:outputPanel><!-- end instance-list -->
+
+      <apex:outputPanel id="hidden-input-wrapper" style="position: absolute; top: -9999px;"
+                        html-data-build-id="{!assembler.build.Id}"
+                        html-data-build-is-in-progress="{!assembler.isInProgress}"
+                        html-data-build-is-completed="{!assembler.isCompleted}"
+                        html-data-existing-deployment-id="{!deployment.Id}"
+                        html-data-existing-deployment-name="{!deployment.Name}"
+                        html-data-completed-build-id="{!deployment.Completed_Build__c}"
+                        html-data-has-save-errors="{!hasSaveErrors}"
+                        html-data-has-permissions="{!userHasPermissions}"
+                        html-data-is-auth-valid="{!isAuthValid}" >
+      </apex:outputPanel>
+
+      <div class="page-block-panel-section" id="slingshot-card">
+        <apex:outputPanel styleClass="manifest-alert-panel" id="manifest-alert-panel">
+          <div id="slingshot-card-errors" class="bw-error">
+            <div class="ss-card-error-panel overflow-ellipses">
+              <div class="error-icon box-vertical-center">
+                <img alt="An error has occurred" title="An error has occurred" src="/s.gif"/>
+              </div>
+              <div class="error-text"></div>
+            </div>
+          </div>
+          <div id="stale-manifest-alert" class="{!IF(assembler.isStaleManifest, 'stale-manifest', '')}">
+            <div id="alert-icon" class="box-vertical-center">
+              <img alt="Manifest is stale" title="Manifest is stale" src="/s.gif"/>
+            </div>
+            <div id="alert-text">
+              <span class="static-msg">
+                The manifest is out of sync with the currently documented components
+              </span>
+              <span class="alert-time">
+                {!staleManifestCheckTime}
+              </span>
+              <span class="sync-text">
+                <a id="sync-manifest-link">Sync Manifest ></a>
+              </span>
+            </div>
+            <img alt="close" title="close" src="/s.gif" class="info-close box-vertical-center close-icon" />
+          </div>
+          <div id="changed-deployment-alert" class="{!IF(isDeploymentSettingsChanged, 'is-changed', '')}">
+            <div class="box-vertical-center">
+              <img class="warning-sign" src="/s.gif" />
+              <span class="static-msg">The deployment results and errors do not reflect the current deployment settings</span>
+              <img alt="close" title="close" src="/s.gif" class="warning-close close-icon" />
+            </div>
+          </div>
+
+        </apex:outputPanel>
+        <div class="page-block-panel-section-header" >
+          Deployments <span class='deployment-reset' title='Reset the manifest and start a new deployment with only documented components.'></span>
+        </div>
+
+        <div id="slingshot-card-body" class="page-block-panel-section-body">
+          <div class="tray-handle closed" id="load-deployment-handle" >
+            <img alt="Load deployment" class="" src="/s.gif" title="Load deployment" />
+          </div>
+          <div id="load-deployment-pane" class="sliding-tray">
+            <div class="deploy-list-header">
+              <h2>Saved Deployments</h2>
+              <a class="upload-build" alt="Manually upload a custom package" title="Manually upload a custom package">
+                <img src="/s.gif" />
+              </a>
+            </div>
+            <div id="manual-upload-form">
+              <div class="deploy-list-header">
+                <h2>Upload Build</h2>
+              </div>
+              <div class="upload-drag-helper">
+                <div class="upload-a-package">
+                  <p class="upload-text">Drop file here</p>
+                  <p>or</p>
+                  <div class="subtle-btn upload-btn">
+                      Select File
+                      <input type="file" accept="application/zip,application/x-zip-compressed,application/octet-stream" class="file-input" ></input>
+                  </div>
+                </div>
+                <a id="exit-manual-upload">Exit</a>
+              </div>
+              <div class="manual-upload-details">
+                <div>
+                  <div class="upload-folder-display">
+                    <span class="manual-file-name overflow-ellipses"></span>
+                  </div>
+                  <img alt="loading" class="barber-loader" src="/s.gif" />
+                </div>
+              </div>
+            </div>
+            <div id="saved-deployment-list" class="container-fluid deployment-list-wrapper">
+            </div>
+
+          </div>
+
+          <div id="ss-container">
+             <div class="deployment-form">
+              <div class="deployment-form-options test-options">
+                <div class="header">Test Options</div>
+                <div class="detail">
+                  <div class="option-label">
+                    <input type="radio" class="fancy-radio" name="test-level-radio" value="Default" id="test-level-radio-0" checked="checked" />
+                    <label for="test-level-radio-0"><span></span></label>
+                    <label for="test-level-radio-0">Default</label>
+                    <img src="/s.gif" class="info-icon" title="No tests are executed for sandbox, Developer Edition, or trial organizations. In production, all tests are executed if the deployment contains Apex classes or triggers except the ones that originate from managed packages. If your package doesn’t contain Apex components, no tests are run."></img>
+                  </div>
+                  <div class="option-label">
+                    <input type="radio" class="fancy-radio" name="test-level-radio" value="RunLocalTests" id="test-level-radio-1" />
+                    <label for="test-level-radio-1"><span></span></label>
+                    <label for="test-level-radio-1">Run Tests</label>
+                    <img src="/s.gif" class="info-icon" title="All tests are run except the ones that originate from installed managed packages."></img>
+                  </div>
+                  <div class="option-label">
+                    <input type="radio" class="fancy-radio" name="test-level-radio" value="RunAllTestsInOrg" id="test-level-radio-2" />
+                    <label for="test-level-radio-2" ><span></span></label>
+                    <label for="test-level-radio-2" >Run All Tests</label>
+                    <img src="/s.gif" class="info-icon" title="All tests are run including tests of managed packages."></img>
+                  </div>
+                  <apex:inputHidden value="{!testLevel}" id="test-level"/>
+                </div>
+                <div class="vrule"></div>
+              </div>
+              <div class="deployment-form-options">
+                <div id="quickdeploy-options">
+                  <apex:inputCheckbox tabIndex="5" id="is-quickdeploy" styleClass="fancy-checkbox" value="{!isQuickDeploy}" />
+                  <apex:outputLabel styleClass="checkbox" for="is-quickdeploy"><span></span></apex:outputLabel>
+                  <apex:outputLabel for="is-quickdeploy">Quick Deploy</apex:outputLabel>
+                </div>
+                <div id="rebuild-package-from-source-container">
+                  <apex:inputCheckbox tabIndex="2" id="rebuild-package-from-source" styleClass="fancy-checkbox" value="{!rebuildPackageFromSource}" />
+                  <apex:outputLabel styleClass="checkbox" for="rebuild-package-from-source"><span></span></apex:outputLabel>
+                  <apex:outputLabel for="rebuild-package-from-source">
+                    Update build package from
+                    <br/>
+                    <span class="deployment-form-options-indented-line">
+                      the source instance
+                    </span>
+                  </apex:outputLabel>
+                </div>
+
+                <div class="info-msg">
+                  <img src="/s.gif" class="info-icon"></img><div>Prior deployment results and errors will be overwritten</div>
+                </div>
+
+                <div class="cancel">
+                  <a>Cancel</a>
+                </div>
+              </div>
+
+              <div class="deployment-form-buttons">
+                <button class="confirm-button validate-confirm-button">
+                  <span class="validate-confirm-image">Validate</span><img src="/s.gif" alt="Validate" />
+                </button>
+                <button class="confirm-button deploy-confirm-button">
+                  <span class="deploy-confirm-image">Deploy</span><img src="/s.gif" alt="Deploy" />
+                </button>
+              </div>
+            </div> <!-- deployment form -->
+
+            <div class="confirm-panel">
+              <div class="slider-container">
+                <div id="slider" class="slider"></div>
+                <div class="confirm-target" ></div>
+                <span id="confirm-prompt">Drag to Confirm</span>
+                <span id="confirm-end-prompt">Action Confirmed!</span>
+              </div>
+              <div id="confirm-info">
+                <div>
+                  <span class="confirm-text">Deploying to <span class="instance-name-confirm">{instance-name}</span>.</span>
+                </div>
+                <a href="" class="cancel-deploy" id="cancel-confirm"></a>
+              </div>
+            </div> <!--  end confirm-panel -->
+            <apex:outputPanel id="slingshot-detail" layout="block" styleClass="ss-record-wrap {!IF(assembler.build.Manual_Upload__c, 'manual-upload', '')}" rendered="{!displaySlingshot}">
+              <div class="ss-col-one">
+                <div class="save-wrapper">
+                  <div id="deploy-name-wrapper">
+                    <span class="deployment-name-static">
+                      <span class="name overflow-ellipses" title="{!deployment.Name}">{!IF(OR(ISNULL(deployment.Name), ISBLANK(deployment.Name)), 'Untitled', deployment.Name)}</span><span id="deployment-unsaved">*</span>
+                      <div id="deploy-save-message-spinner-container">
+                        <c:MessageSpinner message="Saving" size="small" ></c:MessageSpinner>
+                      </div>
+                      <div id="deploy-load-message-spinner-container">
+                        <c:MessageSpinner message="Loading" size="small" ></c:MessageSpinner>
+                      </div>
+                    </span>
+                    <a id="save-deployment-link" class="deploy-save-active">
+                      <img src="/s.gif" title="Save Deployment"></img>
+                    </a>
+                    <div class="flyout-menu">
+                      <ul>
+                        <li id="save-deployment-option"><span>Save</span></li>
+                        <li id="saveas-deployment-option"><span>Save As</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div id="deploy-input-wrapper">
+                    <input type="text" id="deploy-name-input" value="{!deployment.Name}" placeholder="Untitled"/>
+                    <button class="important-btn alm-btn save-btn" >Save</button>
+                  </div>
+                </div>
+
+                <div id="source-selection" class="instance-selection">
+                  <span class="prompt">Select a SOURCE instance</span>
+                  <span class="prompt-unavail">
+                    SOURCE instances are not applicable when using manually uploaded packages
+                  </span>
+
+                  <span class="destination-label">SOURCE:</span>
+
+                  <div class="instance-info vertical-center">
+                    <div class="instance-name overflow-ellipses"></div>
+                    <div class="instance-user-name overflow-ellipses"></div>
+                    <a class="unauthorized-text"></a>
+                  </div>
+
+                  <div class="oauth-user-edit" />
+                  <div class="unauthorized-icon" title="Click to authorize" ></div>
+                  <div class="authorized-icon" title=""></div>
+
+                  <div class="oauth-user-cancel" title="Cancel"/>
+
+                  <apex:inputHidden value="{!sourceInstanceId}" id="src-instance-id"/>
+                </div>
+                <div id="target-selection" class="instance-selection">
+                  <span class="prompt">Select a TARGET instance</span>
+
+                  <span class="destination-label">TARGET:</span>
+
+                  <div class="instance-info">
+                    <div class="instance-name overflow-ellipses"></div>
+                    <div class="instance-user-name overflow-ellipses"></div>
+                    <a class="unauthorized-text"></a>
+                  </div>
+
+                  <div class="oauth-user-edit" />
+                  <div class="unauthorized-icon" title="Click to authorize" ></div>
+                  <div class="authorized-icon" title=""></div>
+
+                  <div class="oauth-user-cancel" title="Cancel"/>
+
+                  <apex:inputHidden value="{!targetInstanceId}" id="tgt-instance-id"/>
+                </div>
+
+                <div class="manifest-tab" data-is-loaded="false">
+                  <img class="expand" src="/s.gif"></img>Manifest
+                  <div id="manifest-message-spinner-container">
+                    <c:MessageSpinner message="Adding Components" size="small" ></c:MessageSpinner>
+                  </div>
+                  <img class="error" src="/s.gif"></img>
+                </div>
+              </div><!--ss-col-one-->
+
+              <div class="ss-col-two">
+                <div class="progress-wrap">
+                  <div class="wrap-col-end one">
+                    <div class="wrap-container-end-columns build">
+                      <div class="wrap-container-labels build">
+                        <div class="progress-result col-one"></div>
+                        <div class="progress-type col-one">Build</div>
+                      </div>
+
+                      <div class="wrap-container-image build">
+                        <img class="build" src="/s.gif" />
+                      </div>
+                    </div>
+
+                    <div class="wrap-container-end-columns apex">
+                      <div class="wrap-container-labels apex" data-has-errors="{{deploymentModel.hasTestErrors}}" data-tests-run="{{deploymentModel.record.Number_Tests_Completed__c}}" data-tests-total="{{deploymentModel.record.Number_Tests_Total__c}}">
+                        <div class="progress-result col-one"></div>
+                        <div class="progress-type col-one"></div>
+                      </div>
+
+                      <div class="wrap-container-image apex">
+                        <img class="apex" src="/s.gif" />
+                      </div>
+                    </div>
+
+                  </div><!--wrap-col-one -->
+
+                  <div class="wrap-col-two">
+                    <div class="progress-circle">
+                      <div class="component-progress"></div>
+                      <div class="selected-action">
+                        <div class="deployment-progress-text pending"></div>
+                        <span class="deployment-text pending">Ready</span>
+                        <span class="deployment-fail-text"></span>
+                        <img id="selected-action-img" class="pending" src="/s.gif" />
+                        <div class="deployment-canceled-text" />
+                        <div class="quick-deploy-help">
+                            <span>Using Quick Deploy</span>
+                            <img class="hover-help" title="Quick Deploy Results: These metrics reflect the results of a quick deployment. Unit tests and code coverage results are inherited from the original validation." src="/s.gif" />
+                        </div>
+                      </div>
+                    </div><!--progress-circle-->
+                    <div id="sf-deployment-id-container">
+                      Deployment ID: <span>N/A</span>
+                    </div>
+                    <div id="deployment-status-detail"></div>
+                  </div><!--wrap-col-two -->
+
+
+                  <div class="wrap-col-end three">
+
+                     <div class="wrap-container-end-columns components">
+                      <div class="wrap-container-image components">
+                        <img class="components" src="/s.gif" />
+                      </div>
+
+                      <div class="wrap-container-labels components" data-has-errors="{{deploymentModel.hasComponentErrors}}" data-comps-deployed="{{deploymentModel.record.Number_Components_Deployed__c}}" data-comps-total="{{deploymentModel.record.Number_Components_Total__c}}">
+                        <div class="progress-result col-three"></div>
+                        <div class="progress-type col-three"></div>
+                      </div>
+                    </div>
+
+                     <div class="wrap-container-end-columns coverage">
+                       <div class="wrap-container-image coverage">
+                          <img class="coverage" src="/s.gif" />
+                       </div>
+
+                       <div class="wrap-container-labels coverage">
+                          <div class="progress-result col-three"></div>
+                          <div class="progress-type col-three">Code Coverage</div>
+                       </div>
+                     </div>
+
+                  </div><!--wrap-col-three -->
+
+                </div><!--progress-wrap-->
+
+                <div class="time-details-container">
+                  <span class="time-started-container">
+                    <span class="time-started">Start Time: </span>
+                  </span>
+
+                  <span class="time-finished-container">
+                    <span class="time-finished">Finish Time: </span>
+                  </span>
+               </div><!--time-executing-wrap-->
+              </div><!--ss-col-two-->
+
+              <div class="ss-col-three">
+                <div id="action-button-overlay" class="inactive">
+                  <div class="content vertical-center">
+                    <span class="canceling-text">Canceling...</span>
+                    <span class="validating-text">Validating...</span>
+                    <img src="/s.gif" alt="Validating" class="validating-icon"/>
+                    <span class="deploying-text">Deploying...</span>
+                    <img src="/s.gif" alt="Deploying" class="deploying-icon"/>
+                    <div id="cancel-deployment">
+                      <a>
+                        <img src="/s.gif" alt="Cancel Deployment" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="small-btn-container">
+                  <div class="validate-btn inactive-validate"><span>validate</span><img src="/s.gif" alt="Validate" /></div>
+                  <div class="deploy-btn inactive-deploy"><span>deploy</span><img src="/s.gif" alt="Deploy" /></div>
+                </div>
+              </div><!--ss-col-three-->
+            </apex:outputPanel><!--ss-record-wrap-->
+          </div><!-- #ss-container -->
+          <div id="manifest-body" data-current-deployment-metric="build">
+
+              <div id="manifest-body-header">
+                <span id="manifest-legend">
+                  <span id="manifest-legend-header">
+                    <span id="manifest-legend-header-icon"></span>
+                    <span id="manifest-legend-header-title">Legend</span>
+                    <span id="manifest-legend-header-close" class="vertical-center"></span>
+                  </span>
+                  <div id="manifest-legend-body">
+                    <div class="manifest-legend-body-entry ignored">Ignored Component - Will NOT be deployed</div>
+                    <div class="manifest-legend-body-entry deleted">Destructive Component - Will be DELETED</div>
+                    <div class="manifest-legend-body-entry">Documented Component - Will be deployed</div>
+                    <div class="manifest-legend-body-entry undocumented">
+                      <span class="manifest-legend-body-entry-icon"></span>
+                      Undocumented Component - Will be deployed
+                    </div>
+                  </div>
+                </span>
+              </div>
+
+              <!-- Need to wrap this inside of another outputPanel in order to get the rerender to work -->
+              <apex:outputPanel id="deployment-errors-build-panel">
+                <apex:outputPanel rendered="{!deploymentErrors.renderBuildErrors}">
+                  <div class="simple-accordion-errors">
+                    <c:SimpleAccordion sectionId="errors-build" sectionTitle='<span class="component-count">{!deploymentErrors.buildErrors.size}</span> Build Errors' >
+                      <apex:outputPanel id="manifest-test-errors-detail" layout="block">
+                        <table class="alm-table zebra">
+                          <thead>
+                              <tr>
+                                <th class="error-key"><img class="sortable" src="/s.gif"></img><span class="sortable-text">Key</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Description__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Type__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Error_Cause__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Component_Name__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Component_Type__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Parent_Component__c.Label}</span></th>
+                              </tr>
+                          </thead>
+
+                          <tbody>
+                            <apex:repeat value="{!chunkedBuildErrors}" var="almErrorRecordChunk">
+                              <apex:repeat value="{!almErrorRecordChunk}" var="almErrorRecord">
+                                <tr>
+                                  <td class="error-key-cell"><apex:outputLink value="/{!almErrorRecord.Id}" target="_blank">{!almErrorRecord.Name}</apex:outputLink></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Description__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Type__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Error_Cause__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Component_Name__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Component_Type__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Parent_Component__c}"/></td>
+                                </tr>
+                              </apex:repeat>
+                            </apex:repeat>
+                          </tbody>
+
+                        </table>
+                      </apex:outputPanel>
+                    </c:SimpleAccordion>
+                  </div>
+                </apex:outputPanel>
+              </apex:outputPanel>
+
+              <apex:outputPanel id="deployment-errors-component-panel">
+                <apex:outputPanel rendered="{!deploymentErrors.renderComponentErrors}">
+                  <div class="simple-accordion-errors">
+                    <c:SimpleAccordion sectionId="errors-components" sectionTitle='<span class="component-count">{!deploymentErrors.componentErrors.size}</span> Component Errors' >
+                      <apex:outputPanel id="manifest-test-errors-detail" layout="block">
+                        <table class="alm-table zebra">
+                          <thead>
+                              <tr>
+                                  <th  class="error-key"><img class="sortable" src="/s.gif"></img><span class="sortable-text">Key</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Component_Name__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Component_Type__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Error_Location__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Column__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Type__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Error_Message__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Deleted__c.Label}</span></th>
+                              </tr>
+                          </thead>
+
+                          <tbody>
+                            <apex:repeat value="{!chunkedComponentErrors}" var="almErrorRecordChunk">
+                              <apex:repeat value="{!almErrorRecordChunk}" var="almErrorRecord">
+                                <tr>
+                                  <td class="error-key-cell"><apex:outputLink value="/{!almErrorRecord.Id}" target="_blank">{!almErrorRecord.Name}</apex:outputLink></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Component_Name__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Component_Type__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Error_Location__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Column__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Type__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Error_Message__c}"/></td>
+                                  <td>
+                                    <apex:inputCheckbox id="comp-error-deleted" styleClass="fancy-checkbox disabled" value="{!almErrorRecord.Deleted__c}" disabled="true"/>
+                                    <apex:outputLabel styleClass="checkbox" for="comp-error-deleted"><span></span></apex:outputLabel>
+                                  </td>
+                                </tr>
+                              </apex:repeat>
+                            </apex:repeat>
+                          </tbody>
+
+                        </table>
+                      </apex:outputPanel>
+                    </c:SimpleAccordion>
+                  </div>
+                </apex:outputPanel>
+              </apex:outputPanel>
+
+              <apex:outputPanel id="deployment-errors-apex-panel">
+                <apex:outputPanel rendered="{!deploymentErrors.renderApexErrors}">
+                  <div class="simple-accordion-errors">
+                    <c:SimpleAccordion sectionId="errors-apex" sectionTitle='<span class="component-count">{!deploymentErrors.apexErrors.size}</span> Unit Test Errors' >
+                      <apex:outputPanel id="manifest-test-errors-detail" layout="block">
+                        <table class="alm-table zebra">
+                          <thead>
+                              <tr>
+                                  <th class="error-key"><img class="sortable" src="/s.gif"></img><span class="sortable-text">Key</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Duration__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Class__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Method__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Type__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Error_Message__c.Label}</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Stack_Trace__c.Label}</span></th>
+                              </tr>
+                          </thead>
+
+                          <tbody>
+                            <apex:repeat value="{!chunkedApexErrors}" var="almErrorRecordChunk">
+                              <apex:repeat value="{!almErrorRecordChunk}" var="almErrorRecord">
+                                <tr>
+                                  <td class="error-key-cell"><apex:outputLink value="/{!almErrorRecord.Id}" target="_blank">{!almErrorRecord.Name}</apex:outputLink></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Duration__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Class__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Method__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Type__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Error_Message__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Stack_Trace__c}"/></td>
+                                </tr>
+                              </apex:repeat>
+                            </apex:repeat>
+                          </tbody>
+
+                        </table>
+                      </apex:outputPanel>
+                    </c:SimpleAccordion>
+                  </div>
+                </apex:outputPanel>
+              </apex:outputPanel>
+
+              <apex:outputPanel id="deployment-errors-coverage-panel">
+                <apex:outputPanel rendered="{!deploymentErrors.renderCodeCoverageErrors}">
+                  <div class="simple-accordion-errors">
+                    <c:SimpleAccordion sectionId="errors-coverage" sectionTitle='<span class="component-count">{!deploymentErrors.codeCoverageErrors.size}</span> Code Coverage Errors' >
+                      <apex:outputPanel id="manifest-coverage-errors-detail" layout="block">
+                        <table class="alm-table zebra">
+                          <thead>
+                              <tr>
+                                  <th></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">Trigger Name</span></th>
+                                  <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.ALM_Error__c.Fields.Error_Message__c.Label}</span></th>
+                              </tr>
+                          </thead>
+
+                          <tbody>
+                            <apex:repeat value="{!chunkedCodeCoverageErrors}" var="almErrorRecordChunk">
+                              <apex:repeat value="{!almErrorRecordChunk}" var="almErrorRecord">
+                                <tr>
+                                  <td></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Component_Name__c}"/></td>
+                                  <td><apex:outputText value="{!almErrorRecord.Error_Message__c}"/></td>
+                                </tr>
+                              </apex:repeat>
+                            </apex:repeat>
+                          </tbody>
+
+                        </table>
+                      </apex:outputPanel>
+                    </c:SimpleAccordion>
+                  </div>
+                </apex:outputPanel>
+              </apex:outputPanel>
+            <!-- End Deployment Errors -->
+
+            <apex:outputPanel id="manifest-body-wrapper" styleClass="saved-panel" html-data-documented-components="{!assembler.documentedComponentsJSON}">
+              <apex:outputPanel id="manifest-manual-upload-placeholder" styleClass="manual-upload-placeholder" rendered="{!assembler.isManualUpload}" layout="block">
+                <apex:pageMessage severity="info"
+                                  strength="1"
+                                  escape="false"
+                                  summary="<b>Components Not Available:</b> Manifest view is not available for uploaded packages."/>
+                <div class="manual-upload-details manifest-upload-details">
+                  <div>
+                    <div class="upload-folder-display">
+                      <span class="manual-file-name overflow-ellipses">{!deployment.Name}.zip</span>
+                    </div>
+                    <img alt="loading" class="barber-loader" src="/s.gif" />
+                  </div>
+                </div>
+              </apex:outputPanel>
+              <apex:outputPanel id="manifest" rendered="{!NOT(assembler.isManualUpload)}">
+                <c:SimpleAccordion sectionId="manifest-components" sectionTitle='<span class="component-count">{!assembler.componentCount}</span> Components In This Build' >
+                  <div class="tray-handle" id="manifest-edit-handle" >
+                    <img alt="edit manifest" class="" src="/s.gif" title="edit manifest" />
+                  </div>
+                  <div id="manifest-edit-pane" class="sliding-tray">
+                    <div class="tray-title">Add Components</div>
+                      <div id="manifest-edit-details">
+                        <div id="search-panel" >
+                          <div class="search-panel-table">
+                            <div id="search-form">
+                              <div>
+                                <input type="text" id="component-name" placeholder="Name" />
+                              </div>
+                              <div>
+                                <input type="text" id="component-type" placeholder="Type" />
+                              </div>
+                              <div>
+                                <input type="text" id="parent-name" placeholder="Parent Component" />
+                              </div>
+                              <div class="alm-combobox">
+                                <input id="instance-search-filter" type="text" placeholder="Source Instance"/>
+                                <a class="expander"></a>
+                                <select class="filter-values">
+                                  <apex:repeat value="{!assembler.instanceFilters}" var="instance">
+                                    <option value="{!instance.label}">{!instance.label}</option>
+                                  </apex:repeat>
+                                </select>
+                              </div>
+                              <button type="button" class="important-btn search-btn alm-btn" >Search<span class="search-icon"></span></button>
+                            </div>
+                            <apex:outputPanel id="search-results" styleClass="search-results" layout="block">
+                              <div id="selected-comp-id-string">
+                                <c:ClientComponentSearchResults pagingLocation="bottom" showpagesizecontrol="false">
+                                </c:ClientComponentSearchResults>
+                              </div>
+                            </apex:outputPanel>
+                          </div>
+                          <button type="button" class="add-btn important-btn inactive alm-btn disableable-btn" >Apply Selected</button>
+                        </div>
+                      </div>
+                  </div> <!-- end manifest-edit-pane -->
+                  <div class="tray-handle" id="manifest-filter-handle" >
+                    <img alt="filter manifest" class="filter-icon" src="/s.gif" title="filter manifest" />
+                  </div>
+                  <div id="manifest-filter-pane" class="sliding-tray">
+                    <div class="tray-title">Filter Manifest</div>
+                      <div id="filter-manifest-body">
+                        <c:pageBlockPanelSection sectionTitle="Filter By Source Instance">
+                          <div class="alm-combobox">
+                            <input id="instance-filter" type="text" placeholder="Source Instance"/>
+                            <a id="instances-expand" class="expander"></a>
+                            <apex:selectList value="{!assembler.selectedInstanceFilters}" styleClass="filter-values" multiselect="true">
+                                <apex:selectOptions value="{!assembler.instanceFilters}" />
+                            </apex:selectList>
+                          </div>
+                          <ul class="combobox-selection" ></ul>
+                        </c:pageBlockPanelSection>
+                        <c:pageBlockPanelSection sectionTitle="Filter By Component Type">
+                          <div class="alm-combobox">
+                            <input id="type-filter" type="text" placeholder="Component Type"/>
+                            <a class="expander"></a>
+                            <apex:selectList value="{!assembler.selectedTypeFilters}" styleClass="filter-values" multiselect="true">
+                              <apex:selectOptions value="{!assembler.typeFilters}" />
+                            </apex:selectList>
+                          </div>
+                        <ul class="combobox-selection" ></ul>
+                      </c:pageBlockPanelSection>
+                      <c:pageBlockPanelSection sectionTitle="Filter By Item's Status">
+                        <div class="alm-combobox">
+                          <input id="status-filter" type="text" placeholder="Backlog Item Status"/>
+                          <a class="expander"></a>
+                          <apex:selectList value="{!assembler.selectedStatusFilters}" styleClass="filter-values" multiselect="true">
+                            <apex:selectOptions value="{!assembler.statusFilters}" />
+                          </apex:selectList>
+                        </div>
+                        <ul class="combobox-selection" ></ul>
+                      </c:pageBlockPanelSection>
+                      <c:pageBlockPanelSection sectionTitle="Filter By Backlog Item">
+                        <ul class="backlog-menu">
+                          <apex:repeat value="{!assembler.backlogFilters}" var="backlogFilter">
+                            <li data-val="{!backlogFilter.id}">
+                              <a>
+                                <apex:inputCheckbox id="bklg-filter" styleClass="fancy-checkbox" value="{!backlogFilter.isSelected}" />
+                                <apex:outputLabel styleClass="checkbox" for="bklg-filter">
+                                  <span></span>
+                                  <apex:outputText value="{!backlogFilter.Name}" />
+                                </apex:outputLabel>
+                                <span>{!backlogFilter.recordTypeName}</span>
+                              </a>
+                            </li>
+                          </apex:repeat>
+                        </ul>
+                      </c:pageBlockPanelSection>
+                      <a id="clear-filters">Clear Filters &gt;</a>
+                    </div>
+                  </div> <!-- end manifest-filter-pane -->
+                  <apex:outputPanel id="manifest-detail" styleClass="manifest-detail" layout="block">
+                    <table class="alm-table zebra">
+                      <thead>
+                          <tr>
+                              <th id="manifest-select-all">
+                                <a class="remove-all" href="javascript:void(0);">Remove All</a>
+                                <a class="add-all" href="javascript:void(0);">Add All</a>
+                              </th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Backlog__c.Fields.Name.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Backlog__c.Fields.Status__c.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Backlog_Component__c.Fields.Source_Instance__c.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Component__c.Fields.Name.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Component__c.Fields.Type__c.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Component__c.Fields.Parent_Component__c.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Backlog_Component__c.Fields.Notes__c.Label}</span></th>
+                              <th><img class="sortable" src="/s.gif"></img><span class="sortable-text">{!$ObjectType.Backlog_Component__c.Fields.Deploy_Manually__c.Label}</span></th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                        <apex:repeat value="{!assembler.chunkedDocumentedManualComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                        <apex:repeat value="{!assembler.chunkedDocumentedDestructiveManualComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                        <apex:repeat value="{!assembler.chunkedUndocumentedDestructiveComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                        <apex:repeat value="{!assembler.chunkedDocumentedDestructiveComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                        <apex:repeat value="{!assembler.chunkedUndocumentedComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                        <apex:repeat value="{!assembler.chunkedDocumentedComponents}" var="manifestRecordChunk">
+                          <c:AssemblerManifestSection manifestRecords="{!manifestRecordChunk}" />
+                        </apex:repeat>
+                      </tbody>
+                    </table>
+                  </apex:outputPanel>
+                </c:SimpleAccordion>
+                <apex:outputPanel layout="block" styleClass="profile-manifest" id="profile-manifest">
+                  <apex:inputHidden id="pending-removals" value="{!assembler.pendingRemovals}" />
+                  <c:SimpleAccordion sectionTitle="{!assembler.selectedProfileCount} Profile Permissions" >
+                      <div id="profile-panel" class="clearfix" >
+                        <div class="tray-handle" id="profile-edit-handle" >
+                          <img alt="edit profiles" class="" src="/s.gif" title="edit profiles" />
+                        </div>
+                        <div id="profile-edit-pane" class="sliding-tray">
+                          <div class="tray-title">
+                            Manage Profiles
+                            <div class="select-all-options">
+                              <input type="checkbox" id="profile-select-all" class="fancy-checkbox" />
+                              <label class="checkbox" for="profile-select-all">
+                                <span></span>
+                              </label>
+                              <label for="profile-select-all">
+                                All
+                              </label>
+                              <img src="/s.gif" title="To select all use CTRL+A or ⌘+A" class="info-icon" />
+                            </div>
+                            <apex:commandButton id="apply-profiles-btn" styleClass="important-btn2" action="{!assembler.updateProfileSelection}" value="Apply" rerender="msgs, profile-manifest" oncomplete="BW.assembler.finishApplyProfiles()"/>
+                            <div class="tray-handle close" id="profile-edit-handle-inner" >
+                              <img alt="edit profiles" class="" src="/s.gif" title="edit profiles" />
+                            </div>
+                          </div>
+                          <div id="profile-edit-details">
+                            <h3><span>Profiles from Manifest</span></h3>
+                            <div class="clearfix">
+                            <apex:repeat value="{!assembler.documentedPermissions}" var="profile">
+                              <div class="profile-tile {!IF(profile.selected,'selected','')}">
+                                <span class="name" title="{!profile.profileName}">{!profile.profileName}</span>
+                                <apex:inputHidden value="{!profile.selected}" />
+                               </div>
+                            </apex:repeat>
+                            </div>
+                            <h3><span>Available Profiles</span></h3>
+                            <div class="clearfix">
+                            <apex:repeat value="{!assembler.undocumentedPermissions}" var="profile">
+                              <div class="profile-tile {!IF(profile.selected,'selected','')}">
+                                <span class="name" title="{!profile.profileName}">{!profile.profileName}</span>
+                                <apex:inputHidden value="{!profile.selected}" />
+                               </div>
+                            </apex:repeat>
+                            </div>
+                          </div>
+                      </div>
+                      <div id="profile-panel-list" class="profile-permissions" data-default-instances="{!assembler.manifestInstances}">
+                        <apex:repeat value="{!assembler.selectedPermissions}" var="profile">
+                          <div class="profile-tile {!IF(profile.isUndocumented,'undocumented','')}" data-key="{!HTMLENCODE(profile.key)}">
+                            <img class="undocumented" src="/s.gif" title="Newly added profiles are undocumented!" />
+                            <span class="name" title="{!profile.profileName}">{!profile.profileName}</span>
+                            <apex:inputHidden value="{!profile.selectedPermissions}" id="selected-permissions"/>
+                            <apex:inputHidden value="{!profile.includeOnlyDocumentedComponents}" id="include-only-documented-components"/>
+                            <apex:inputHidden value="{!profile.includeEntireProfile}" id="include-entire-profile"/>
+                          </div>
+                        </apex:repeat>
+                      </div>
+                    </div>
+                  </c:SimpleAccordion>
+                </apex:outputPanel><!-- end profile-manifest -->
+              </apex:outputPanel>
+            </apex:outputPanel> <!-- End manifest-body-wrapper -->
+          </div><!-- manifest-body -->
+        </div><!-- slingshot-card-body -->
+      </div><!-- slingshot-card -->
+    </div><!-- alm-container-body -->
+  </apex:form>
+
+  <c:ProfileModal />
+  <div style="display:none;" id="no-access-modal" class="alm-modal vertical-center">
+    <div class="page-block clearfix .vertical-center">
+      <img class="warning-sign" src="/s.gif" ></img><b>Warning:</b><br/><br/>
+
+      <div class="modal-body">
+         You do not have the proper<br/>
+         permissions to use this feature.<br/>
+         Contact your administrator to enable access.<br/><br/>
+        <button id="ok-button" type="button" class="important-btn alm-btn continue-btn" >OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</apex:page>
