@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Sprint_Item__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <enableActivities>false</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>false</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Backlog__c</fullName>
+  <externalId>false</externalId>
+  <label>Backlog Item</label>
+  <referenceTo>Backlog__c</referenceTo>
+  <relationshipLabel>Sprint Items</relationshipLabel>
+  <relationshipName>Sprint_Items</relationshipName>
+  <relationshipOrder>0</relationshipOrder>
+  <reparentableMasterDetail>false</reparentableMasterDetail>
+  <trackTrending>false</trackTrending>
+  <type>MasterDetail</type>
+  <writeRequiresMasterRead>false</writeRequiresMasterRead>
+ </fields>
+ <fields>
+  <fullName>Sprint__c</fullName>
+  <externalId>false</externalId>
+  <label>Sprint</label>
+  <referenceTo>Sprint__c</referenceTo>
+  <relationshipLabel>Sprint Items</relationshipLabel>
+  <relationshipName>Sprint_Items</relationshipName>
+  <relationshipOrder>1</relationshipOrder>
+  <reparentableMasterDetail>false</reparentableMasterDetail>
+  <trackTrending>false</trackTrending>
+  <type>MasterDetail</type>
+  <writeRequiresMasterRead>false</writeRequiresMasterRead>
+ </fields>
+ <fields>
+  <fullName>Status__c</fullName>
+  <externalId>false</externalId>
+  <label>Status</label>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Not Started</fullName>
+     <default>false</default>
+     <label>Not Started</label>
+    </value>
+    <value>
+     <fullName>In Progress</fullName>
+     <default>false</default>
+     <label>In Progress</label>
+    </value>
+    <value>
+     <fullName>Complete</fullName>
+     <default>false</default>
+     <label>Complete</label>
+    </value>
+    <value>
+     <fullName>Incomplete</fullName>
+     <default>false</default>
+     <label>Incomplete</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <label>Sprint Item</label>
+ <nameField>
+  <displayFormat>SI-{000000}</displayFormat>
+  <label>Sprint Item Name</label>
+  <type>AutoNumber</type>
+ </nameField>
+ <pluralLabel>Sprint Items</pluralLabel>
+ <searchLayouts/>
+ <sharingModel>ControlledByParent</sharingModel>
+ <visibility>Public</visibility>
+</CustomObject>
