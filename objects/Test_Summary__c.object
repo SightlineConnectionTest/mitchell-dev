@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Test_Summary__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <description>Summary of test results grouped by test date.</description>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Apex_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex Test Classes.  Apex test classes with unit tests.</inlineHelpText>
+  <label>Apex Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Apex Test Class</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Apex_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex Test Classes.  Apex test classes with unit tests.</inlineHelpText>
+  <label>Apex Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Automated_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of automated functional tests (Selenium scripts).</inlineHelpText>
+  <label>Automated Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Test Script</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Automated_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of automated functional tests (Selenium scripts).</inlineHelpText>
+  <label>Automated Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Completed__c</fullName>
+  <defaultValue>false</defaultValue>
+  <description>Indicates when a BUTR run is finished.  Used to trigger email notification workflow.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Indicates when a BUTR run is finished.  Used to trigger email notification workflow.</inlineHelpText>
+  <label>Completed</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Error_Details__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Log field for detailed error messages from testing.</inlineHelpText>
+  <label>Error Details</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>5</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Failed_Apex_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed Apex Test Classes. Apex test classes with unit tests.</inlineHelpText>
+  <label>Failed Apex Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Apex Test Class</value>
+  </summaryFilterItems>
+  <summaryFilterItems>
+   <field>Test_Result__c.Result__c</field>
+   <operation>equals</operation>
+   <value>Fail</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Failed_Apex_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed Apex Test Classes. Apex test classes with unit tests.</inlineHelpText>
+  <label>Failed Apex Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Failed_Automated_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed automated functional tests (Selenium scripts).</inlineHelpText>
+  <label>Failed Automated Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Test Script</value>
+  </summaryFilterItems>
+  <summaryFilterItems>
+   <field>Test_Result__c.Result__c</field>
+   <operation>equals</operation>
+   <value>Fail</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Failed_Automated_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed automated functional tests (Selenium scripts).</inlineHelpText>
+  <label>Failed Automated Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Failed_Manual_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed manual tests.</inlineHelpText>
+  <label>Failed Manual Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Test Case</value>
+  </summaryFilterItems>
+  <summaryFilterItems>
+   <field>Test_Result__c.Result__c</field>
+   <operation>equals</operation>
+   <value>Fail</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Failed_Manual_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed manual tests.</inlineHelpText>
+  <label>Failed Manual Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Instance_Name__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The instance where the tests were executed in.</inlineHelpText>
+  <label>Instance Name</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Production</fullName>
+     <default>false</default>
+     <label>Production</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Lock_Summary_Values__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <inlineHelpText>Locks summary fields (Total_...) and prevents any result changes to get modify them.</inlineHelpText>
+  <label>Lock Summary Values</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Manual_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of manual tests.</inlineHelpText>
+  <label>Manual Tests Rollup</label>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Test Case</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>count</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Manual_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of manual tests.</inlineHelpText>
+  <label>Manual Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Result__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF(System_Error__c, "Fail",
+IF(AND(Total_Failed_Tests__c = 0, Total_Coverage__c = 0), "Pass", 
+IF(AND(Total_Failed_Tests__c = 0, Total_Coverage__c &gt;= 0.75), "Pass", "Fail" ) 
+))</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The overall test result.  Total Coverage must be 75% or higher and there are no failed test results.</inlineHelpText>
+  <label>Result</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Success_Rate__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF(  Total_Tests_Formula__c  != 0 , (  Total_Tests_Formula__c  -  Total_Failed_Tests_Formula__c  )  /   Total_Tests_Formula__c  , NULL)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The percentage of passing tests.</inlineHelpText>
+  <label>Success Rate</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>System_Error__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <label>System Error</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Test_Date__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The test date.</inlineHelpText>
+  <label>Test Date</label>
+  <required>true</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Date</type>
+ </fields>
+ <fields>
+  <fullName>Time_s__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The time (in seconds) it took to run all the automated test scripts, Apex Code Coverage and Apex classes with unit tests.</inlineHelpText>
+  <label>Time (s)</label>
+  <summarizedField>Test_Result__c.Time__c</summarizedField>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>notEqual</operation>
+   <value>Test Case</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>sum</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Total_Apex_Unit_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex unit tests executed.</inlineHelpText>
+  <label>Total Apex Unit Tests Rollup</label>
+  <summarizedField>Test_Result__c.Total_Unit_Tests__c</summarizedField>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Apex Test Class</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>sum</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Total_Apex_Unit_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex unit tests executed.</inlineHelpText>
+  <label>Total Apex Unit Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Coverage__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Total code coverage of all Apex classes and triggers.  75% is needed to pass.</inlineHelpText>
+  <label>Total Coverage</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>Total_Failed_Apex_Unit_Tests_Rollup__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed unit tests.</inlineHelpText>
+  <label>Total Failed Apex Unit Tests Rollup</label>
+  <summarizedField>Test_Result__c.Total_Failed_Unit_Tests__c</summarizedField>
+  <summaryFilterItems>
+   <field>Test_Result__c.RecordTypeId</field>
+   <operation>equals</operation>
+   <value>Apex Test Class</value>
+  </summaryFilterItems>
+  <summaryFilterItems>
+   <field>Test_Result__c.Result__c</field>
+   <operation>equals</operation>
+   <value>Fail</value>
+  </summaryFilterItems>
+  <summaryForeignKey>Test_Result__c.Test_Summary__c</summaryForeignKey>
+  <summaryOperation>sum</summaryOperation>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Summary</type>
+ </fields>
+ <fields>
+  <fullName>Total_Failed_Apex_Unit_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed unit tests.</inlineHelpText>
+  <label>Total Failed Apex Unit Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Failed_Tests_Formula__c</fullName>
+  <externalId>false</externalId>
+  <formula>Failed_Apex_Tests_Rollup__c  +  Failed_Automated_Tests_Rollup__c +  Failed_Manual_Tests_Rollup__c</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The total number of failed tests. Failed Apex Tests + Failed Automated Tests + Failed Manual Tests.</inlineHelpText>
+  <label>Total Failed Tests Formula</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Failed_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed tests.  Failed Apex Tests + Failed Automated Tests + Failed Manual Tests.</inlineHelpText>
+  <label>Total Failed Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Tests_Formula__c</fullName>
+  <externalId>false</externalId>
+  <formula>Apex_Tests_Rollup__c +  Automated_Tests_Rollup__c +  Manual_Tests_Rollup__c</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The total number of all tests. Apex Tests + Automated Tests + Manual Tests.</inlineHelpText>
+  <label>Total Tests Formula</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of all tests.  Apex Tests + Automated Tests + Manual Tests.</inlineHelpText>
+  <label>Total Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>VF_Date_Hook__c</fullName>
+  <description>Field to accept date ranges for deleting testing summaries from the Testing Management VF page</description>
+  <externalId>false</externalId>
+  <label>VF Date Hook</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <label>Test Summary</label>
+ <listViews>
+  <fullName>All</fullName>
+  <columns>NAME</columns>
+  <columns>Instance_Name__c</columns>
+  <columns>Test_Date__c</columns>
+  <columns>Result__c</columns>
+  <columns>Total_Coverage__c</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <nameField>
+  <displayFormat>TS-{00000}</displayFormat>
+  <label>Test Summary</label>
+  <trackHistory>false</trackHistory>
+  <type>AutoNumber</type>
+ </nameField>
+ <pluralLabel>Test Summaries</pluralLabel>
+ <recordTypeTrackHistory>false</recordTypeTrackHistory>
+ <recordTypes>
+  <fullName>Automated</fullName>
+  <active>true</active>
+  <description>A test summary of autmoated test results</description>
+  <label>Automated</label>
+  <picklistValues>
+   <picklist>Instance_Name__c</picklist>
+   <values>
+    <fullName>Production</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Manual</fullName>
+  <active>true</active>
+  <description>A test summary of manual test results</description>
+  <label>Manual</label>
+  <picklistValues>
+   <picklist>Instance_Name__c</picklist>
+   <values>
+    <fullName>Production</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <searchLayouts>
+  <customTabListAdditionalFields>Test_Date__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Instance_Name__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Result__c</customTabListAdditionalFields>
+  <lookupDialogsAdditionalFields>Test_Date__c</lookupDialogsAdditionalFields>
+  <lookupDialogsAdditionalFields>Instance_Name__c</lookupDialogsAdditionalFields>
+ </searchLayouts>
+ <sharingModel>ReadWrite</sharingModel>
+ <visibility>Public</visibility>
+</CustomObject>

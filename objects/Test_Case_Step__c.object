@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
- <fullName>SSH_Keypair__c</fullName>
+ <fullName>Test_Case_Step__c</fullName>
  <actionOverrides>
   <actionName>Accept</actionName>
   <type>Default</type>
@@ -44,61 +44,60 @@
  <allowInChatterGroups>false</allowInChatterGroups>
  <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
  <deploymentStatus>Deployed</deploymentStatus>
- <enableActivities>false</enableActivities>
+ <enableActivities>true</enableActivities>
  <enableBulkApi>true</enableBulkApi>
  <enableChangeDataCapture>false</enableChangeDataCapture>
  <enableFeeds>false</enableFeeds>
  <enableHistory>false</enableHistory>
- <enableReports>false</enableReports>
- <enableSearch>false</enableSearch>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
  <enableSharing>true</enableSharing>
  <enableStreamingApi>true</enableStreamingApi>
  <fields>
-  <fullName>Passphrase__c</fullName>
-  <description>A passphrase used to encrypt/decrypt SSH keys.</description>
+  <fullName>Step_Number__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>A passphrase used to encrypt/decrypt SSH keys.</inlineHelpText>
-  <label>Passphrase</label>
-  <length>255</length>
-  <required>false</required>
+  <label>Step Number</label>
+  <precision>18</precision>
+  <required>true</required>
+  <scale>0</scale>
   <trackTrending>false</trackTrending>
-  <type>Text</type>
+  <type>Number</type>
   <unique>false</unique>
  </fields>
  <fields>
-  <fullName>Private_Key__c</fullName>
-  <description>An encrypted SSH private key.</description>
+  <fullName>Test_Case__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>An encrypted SSH private key.</inlineHelpText>
-  <label>Private Key</label>
-  <length>32768</length>
+  <label>Test Case</label>
+  <referenceTo>Test_Case__c</referenceTo>
+  <relationshipLabel>Test Case Steps</relationshipLabel>
+  <relationshipName>Test_Case_Steps</relationshipName>
+  <relationshipOrder>0</relationshipOrder>
+  <reparentableMasterDetail>false</reparentableMasterDetail>
   <trackTrending>false</trackTrending>
-  <type>LongTextArea</type>
-  <visibleLines>3</visibleLines>
+  <type>MasterDetail</type>
+  <writeRequiresMasterRead>false</writeRequiresMasterRead>
  </fields>
  <fields>
-  <fullName>Public_Key__c</fullName>
-  <description>An encrypted SSH public key.</description>
+  <fullName>Test_Step__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>An encrypted SSH public key.</inlineHelpText>
-  <label>Public Key</label>
-  <length>32768</length>
+  <label>Test Step</label>
+  <referenceTo>Test_Step__c</referenceTo>
+  <relationshipLabel>Test Cases</relationshipLabel>
+  <relationshipName>Test_Case_Steps</relationshipName>
+  <relationshipOrder>1</relationshipOrder>
+  <reparentableMasterDetail>false</reparentableMasterDetail>
   <trackTrending>false</trackTrending>
-  <type>LongTextArea</type>
-  <visibleLines>3</visibleLines>
+  <type>MasterDetail</type>
+  <writeRequiresMasterRead>false</writeRequiresMasterRead>
  </fields>
- <label>SSH Keypair</label>
- <listViews>
-  <fullName>All</fullName>
-  <filterScope>Everything</filterScope>
-  <label>All</label>
- </listViews>
+ <label>Test Case Step</label>
  <nameField>
-  <label>SSH Keypair Name</label>
-  <type>Text</type>
+  <displayFormat>TCS-{000000}</displayFormat>
+  <label>Test Case Step Name</label>
+  <type>AutoNumber</type>
  </nameField>
- <pluralLabel>SSH Keypairs</pluralLabel>
+ <pluralLabel>Test Case Steps</pluralLabel>
  <searchLayouts/>
- <sharingModel>ReadWrite</sharingModel>
+ <sharingModel>ControlledByParent</sharingModel>
  <visibility>Public</visibility>
 </CustomObject>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
- <fullName>VCS_Repository__c</fullName>
+ <fullName>ALM_User__c</fullName>
  <actionOverrides>
   <actionName>Accept</actionName>
   <type>Default</type>
@@ -44,43 +44,28 @@
  <allowInChatterGroups>false</allowInChatterGroups>
  <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
  <deploymentStatus>Deployed</deploymentStatus>
- <enableActivities>false</enableActivities>
+ <enableActivities>true</enableActivities>
  <enableBulkApi>true</enableBulkApi>
  <enableChangeDataCapture>false</enableChangeDataCapture>
  <enableFeeds>false</enableFeeds>
  <enableHistory>false</enableHistory>
- <enableReports>false</enableReports>
- <enableSearch>false</enableSearch>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
  <enableSharing>true</enableSharing>
  <enableStreamingApi>true</enableStreamingApi>
  <fields>
-  <fullName>Host__c</fullName>
+  <fullName>Email__c</fullName>
   <externalId>false</externalId>
-  <label>Host</label>
+  <label>Email</label>
   <required>false</required>
   <trackTrending>false</trackTrending>
-  <type>Picklist</type>
-  <valueSet>
-   <restricted>true</restricted>
-   <valueSetDefinition>
-    <sorted>false</sorted>
-    <value>
-     <fullName>GitHub</fullName>
-     <default>false</default>
-     <label>GitHub</label>
-    </value>
-    <value>
-     <fullName>Bitbucket</fullName>
-     <default>false</default>
-     <label>Bitbucket</label>
-    </value>
-   </valueSetDefinition>
-  </valueSet>
+  <type>Email</type>
+  <unique>false</unique>
  </fields>
  <fields>
-  <fullName>Organization_Name__c</fullName>
+  <fullName>First_Name__c</fullName>
   <externalId>false</externalId>
-  <label>Host Organization Name</label>
+  <label>First Name</label>
   <length>255</length>
   <required>false</required>
   <trackTrending>false</trackTrending>
@@ -88,40 +73,33 @@
   <unique>false</unique>
  </fields>
  <fields>
-  <fullName>Repository_URL__c</fullName>
-  <description>The SSH URL of the version control system repository.</description>
+  <fullName>Last_Name__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>The SSH URL of the version control system repository. This URL may explicitly specify the "ssh://" protocol or, as in the case of some VCS services (e.g. GitHub), the URL may have its own unique syntax.</inlineHelpText>
-  <label>Repository URL</label>
+  <label>Last Name</label>
   <length>255</length>
   <required>false</required>
   <trackTrending>false</trackTrending>
   <type>Text</type>
   <unique>false</unique>
  </fields>
- <label>VCS Repository</label>
- <listViews>
-  <fullName>All</fullName>
-  <filterScope>Everything</filterScope>
-  <label>All</label>
- </listViews>
+ <fields>
+  <fullName>User__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>User</label>
+  <referenceTo>User</referenceTo>
+  <relationshipName>ALM_Users</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <label>ALM User</label>
  <nameField>
-  <label>VCS Repository Name</label>
+  <label>ALM User Name</label>
   <type>Text</type>
  </nameField>
- <pluralLabel>VCS Repositories</pluralLabel>
+ <pluralLabel>ALM Users</pluralLabel>
  <searchLayouts/>
  <sharingModel>ReadWrite</sharingModel>
  <visibility>Public</visibility>
- <webLinks>
-  <fullName>Validate_VCS_Connection</fullName>
-  <availability>online</availability>
-  <displayType>button</displayType>
-  <height>600</height>
-  <linkType>page</linkType>
-  <masterLabel>Validate VCS Connection</masterLabel>
-  <openType>noSidebar</openType>
-  <page>VCS</page>
-  <protected>false</protected>
- </webLinks>
 </CustomObject>

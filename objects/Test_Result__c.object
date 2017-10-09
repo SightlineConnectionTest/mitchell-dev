@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Test_Result__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <description>Contains detail test result information for each Test Item record</description>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableEnhancedLookup>false</enableEnhancedLookup>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>false</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Code_Coverage_Result__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF (Total_Lines__c = 0 &amp;&amp; Lines_Covered__c = 0, "N/A",
+IF (Total_Lines__c &gt; 0 &amp;&amp; Code_Coverage__c &gt;= 0.75, "Pass", "Warning"
+)
+)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The result of the code coverage.  Must be 75% or higher to pass.</inlineHelpText>
+  <label>Code Coverage Result</label>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Code_Coverage__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The percentage of lines of code that were executed for an Apex Trigger or Apex Class after executing all the unit tests.</inlineHelpText>
+  <label>Code Coverage</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>Failed_Test_Step__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Failed Test Step</label>
+  <referenceTo>Test_Step__c</referenceTo>
+  <relationshipLabel>Test Results</relationshipLabel>
+  <relationshipName>Test_Results</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Lines_Covered__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The number of apex code lines that have been executed after running unit tests.</inlineHelpText>
+  <label>Lines Covered</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Name__c</fullName>
+  <externalId>false</externalId>
+  <label>Name</label>
+  <length>255</length>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Notes__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>User comments for manual test result or error messages from automated testing.</inlineHelpText>
+  <label>Notes</label>
+  <length>32768</length>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>5</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Result__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The result of this test.</inlineHelpText>
+  <label>Result</label>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Untested</fullName>
+     <default>false</default>
+     <label>Untested</label>
+    </value>
+    <value>
+     <fullName>Fail</fullName>
+     <default>false</default>
+     <label>Fail</label>
+    </value>
+    <value>
+     <fullName>Pass</fullName>
+     <default>false</default>
+     <label>Pass</label>
+    </value>
+    <value>
+     <fullName>Blocked</fullName>
+     <default>false</default>
+     <label>Blocked</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Test_Case__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <inlineHelpText>The test that this result is for.</inlineHelpText>
+  <label>Test Script</label>
+  <referenceTo>Test_Case__c</referenceTo>
+  <relationshipLabel>Test Results</relationshipLabel>
+  <relationshipName>Test_Results</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Test_Summary__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The summary record that this test result is a part of.</inlineHelpText>
+  <label>Test Summary</label>
+  <referenceTo>Test_Summary__c</referenceTo>
+  <relationshipLabel>Test Results</relationshipLabel>
+  <relationshipName>Test_Results</relationshipName>
+  <relationshipOrder>0</relationshipOrder>
+  <reparentableMasterDetail>false</reparentableMasterDetail>
+  <trackTrending>false</trackTrending>
+  <type>MasterDetail</type>
+  <writeRequiresMasterRead>false</writeRequiresMasterRead>
+ </fields>
+ <fields>
+  <fullName>Testing_Resource__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <inlineHelpText>The user who executed the test.  In automated testing, this might be empty or assigned to the user that BUTR logs in with.</inlineHelpText>
+  <label>Testing Resource</label>
+  <referenceTo>User</referenceTo>
+  <relationshipName>Test_Results</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Time__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The time it took to run the test in seconds.</inlineHelpText>
+  <label>Time</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>3</scale>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Failed_Unit_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed unit tests.</inlineHelpText>
+  <label>Total Failed Unit Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Lines__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of lines in this Apex trigger or class.</inlineHelpText>
+  <label>Total Lines</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Total_Unit_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of unit tests executed.</inlineHelpText>
+  <label>Total Unit Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <label>Test Result</label>
+ <listViews>
+  <fullName>All</fullName>
+  <columns>NAME</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <nameField>
+  <displayFormat>TestResult-{0000000}</displayFormat>
+  <label>Test Result</label>
+  <type>AutoNumber</type>
+ </nameField>
+ <pluralLabel>Test Results</pluralLabel>
+ <recordTypes>
+  <fullName>Apex_Test_Class</fullName>
+  <active>true</active>
+  <description>Test result for Apex classes with unit tests.</description>
+  <label>Apex Test Class</label>
+  <picklistValues>
+   <picklist>Result__c</picklist>
+   <values>
+    <fullName>Fail</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Pass</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Code_Coverage</fullName>
+  <active>true</active>
+  <description>Test result for code coverage of an Apex Class or Trigger.</description>
+  <label>Code Coverage</label>
+  <picklistValues>
+   <picklist>Result__c</picklist>
+   <values>
+    <fullName>Fail</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Pass</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Test_Case</fullName>
+  <active>true</active>
+  <description>Test result for manual testing.</description>
+  <label>Test Case</label>
+  <picklistValues>
+   <picklist>Result__c</picklist>
+   <values>
+    <fullName>Blocked</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Fail</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Pass</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Untested</fullName>
+    <default>true</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Test_Script</fullName>
+  <active>true</active>
+  <description>The result for an automated test</description>
+  <label>Test Script</label>
+  <picklistValues>
+   <picklist>Result__c</picklist>
+   <values>
+    <fullName>Blocked</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Fail</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Pass</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Untested</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Unit_Test</fullName>
+  <active>true</active>
+  <description>The result for a unit test in an Apex test class</description>
+  <label>Unit Test</label>
+  <picklistValues>
+   <picklist>Result__c</picklist>
+   <values>
+    <fullName>Blocked</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Fail</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Pass</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Untested</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <searchLayouts>
+  <customTabListAdditionalFields>Result__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Test_Summary__c</customTabListAdditionalFields>
+ </searchLayouts>
+ <sharingModel>ControlledByParent</sharingModel>
+ <validationRules>
+  <fullName>If_Result_is_Fail_then_must_id_Fail_Step</fullName>
+  <active>true</active>
+  <description>If the Test Script Result is "Fail" then "Failed Test Step" must have a value.</description>
+  <errorConditionFormula>$RecordType.Name = 'Test Case' &amp;&amp; IF( ISPICKVAL(Result__c, "Fail"),  ISBLANK(Failed_Test_Step__c), !ISBLANK(Failed_Test_Step__c))</errorConditionFormula>
+  <errorDisplayField>Failed_Test_Step__c</errorDisplayField>
+  <errorMessage>If the Result is "Fail", you must lookup the Failed Test Step.</errorMessage>
+ </validationRules>
+ <visibility>Public</visibility>
+</CustomObject>

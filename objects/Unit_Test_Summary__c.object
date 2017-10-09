@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Unit_Test_Summary__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <description>Summary of unit test results</description>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>false</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Apex_Code_Coverage__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF(Apex_Total_LOC__c  != 0 ,   Apex_Lines_Covered__c  /   Apex_Total_LOC__c , NULL)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>Total code coverage of all Apex classes and triggers.  75% is needed to pass.</inlineHelpText>
+  <label>Apex Code Coverage</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>Apex_Lines_Covered__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex lines covered</inlineHelpText>
+  <label>Apex Lines Covered</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Apex_Test_Time__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The time (in seconds) it took to run all apex tests.</inlineHelpText>
+  <label>Time (s)</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Apex_Total_LOC__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of lines of apex code</inlineHelpText>
+  <label>Apex Total Lines of Code</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Completed__c</fullName>
+  <defaultValue>false</defaultValue>
+  <description>Indicates when a test run is finished. Used to trigger email notification workflow.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Indicates when a test run is finished. Used to trigger email notification workflow.</inlineHelpText>
+  <label>Completed</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Error_Details__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Log field for detailed error messages from testing.</inlineHelpText>
+  <label>Error Details</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>5</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Failed_Apex_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed Apex Test methods.</inlineHelpText>
+  <label>Failed Apex Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Instance__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <description>The instance where the unit tests were run</description>
+  <externalId>false</externalId>
+  <label>Instance</label>
+  <referenceTo>Instances__c</referenceTo>
+  <relationshipLabel>Unit Test Summaries</relationshipLabel>
+  <relationshipName>Unit_Test_Summaries</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Result__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF(System_Error__c, "Fail",
+IF(AND(Failed_Apex_Tests__c = 0, Apex_Code_Coverage__c = 0), "Pass",
+IF(AND(Failed_Apex_Tests__c = 0, Apex_Code_Coverage__c &gt;= 0.75), "Pass", "Fail" )
+))</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The overall test result.  Total Coverage must be 75% or higher and there are no failed test results.</inlineHelpText>
+  <label>Result</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Success_Rate__c</fullName>
+  <externalId>false</externalId>
+  <formula>IF( Total_Apex_Unit_Tests__c  != 0 , (  Total_Apex_Unit_Tests__c  -  Failed_Apex_Tests__c  )  /   Total_Apex_Unit_Tests__c  , NULL)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The percentage of passing tests.</inlineHelpText>
+  <label>Success Rate</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>System_Error__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <label>System Error</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Test_Date__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The test date.</inlineHelpText>
+  <label>Test Date</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Date</type>
+ </fields>
+ <fields>
+  <fullName>Total_Apex_Unit_Tests__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of Apex Test methods. .</inlineHelpText>
+  <label>Total Apex Unit Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <label>Unit Test Summary</label>
+ <listViews>
+  <fullName>All</fullName>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <nameField>
+  <displayFormat>UTS-{00000}</displayFormat>
+  <label>Unit Test Summary</label>
+  <trackHistory>false</trackHistory>
+  <type>AutoNumber</type>
+ </nameField>
+ <pluralLabel>Unit Test Summaries</pluralLabel>
+ <searchLayouts/>
+ <sharingModel>ReadWrite</sharingModel>
+ <visibility>Public</visibility>
+</CustomObject>

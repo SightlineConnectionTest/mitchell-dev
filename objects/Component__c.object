@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Component__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableEnhancedLookup>false</enableEnhancedLookup>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Deleted__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <label>Deleted</label>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Description__c</fullName>
+  <externalId>false</externalId>
+  <label>Description</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>3</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Field_Modified_Data__c</fullName>
+  <externalId>false</externalId>
+  <label>Field Modified Data</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>3</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Full_Name__c</fullName>
+  <externalId>false</externalId>
+  <label>Component Full Name</label>
+  <length>255</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Instance_Count__c</fullName>
+  <defaultValue>0</defaultValue>
+  <description>The number of instances that this component exists in.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>The number of instances that this component exists in.</inlineHelpText>
+  <label>Instance Count</label>
+  <precision>2</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Instance__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Instance</label>
+  <referenceTo>Instances__c</referenceTo>
+  <relationshipLabel>Components</relationshipLabel>
+  <relationshipName>Components</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Key__c</fullName>
+  <caseSensitive>false</caseSensitive>
+  <externalId>true</externalId>
+  <label>Key</label>
+  <length>255</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>true</unique>
+ </fields>
+ <fields>
+  <fullName>Last_Modified_Users__c</fullName>
+  <description>Aggregates the users who last modified the component across all instances</description>
+  <externalId>false</externalId>
+  <label>Last Modified Users</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>MultiselectPicklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Not Available</fullName>
+     <default>false</default>
+     <label>Not Available</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+  <visibleLines>4</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Overall_Last_Modified_Date__c</fullName>
+  <description>The most recent modification timestamp across all environments.</description>
+  <externalId>false</externalId>
+  <label>Overall Last Modified Date</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <fields>
+  <fullName>Parent_Component__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Parent Component</label>
+  <referenceTo>Component__c</referenceTo>
+  <relationshipLabel>Child Components</relationshipLabel>
+  <relationshipName>Components</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Post_Deployment_Steps__c</fullName>
+  <externalId>false</externalId>
+  <label>Post Deployment Steps</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>3</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Pre_Deployment_Steps__c</fullName>
+  <externalId>false</externalId>
+  <label>Pre Deployment Steps</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>3</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Source_Instances__c</fullName>
+  <externalId>false</externalId>
+  <label>Source Instances</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>MultiselectPicklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Production</fullName>
+     <default>false</default>
+     <label>Production</label>
+    </value>
+    <value>
+     <fullName>Test</fullName>
+     <default>false</default>
+     <label>Test</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+  <visibleLines>4</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Type__c</fullName>
+  <externalId>false</externalId>
+  <label>Type</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Apex Class</fullName>
+     <default>false</default>
+     <label>Apex Class</label>
+    </value>
+    <value>
+     <fullName>Apex Trigger</fullName>
+     <default>false</default>
+     <label>Apex Trigger</label>
+    </value>
+    <value>
+     <fullName>Application</fullName>
+     <default>false</default>
+     <label>Application</label>
+    </value>
+    <value>
+     <fullName>Approval Process</fullName>
+     <default>false</default>
+     <label>Approval Process</label>
+    </value>
+    <value>
+     <fullName>Assignment Rule</fullName>
+     <default>false</default>
+     <label>Assignment Rule</label>
+    </value>
+    <value>
+     <fullName>Business Rule</fullName>
+     <default>false</default>
+     <label>Business Rule</label>
+    </value>
+    <value>
+     <fullName>Component</fullName>
+     <default>false</default>
+     <label>Component</label>
+    </value>
+    <value>
+     <fullName>Custom Button or Link</fullName>
+     <default>false</default>
+     <label>Custom Button or Link</label>
+    </value>
+    <value>
+     <fullName>Custom Object Tab</fullName>
+     <default>false</default>
+     <label>Custom Object Tab</label>
+    </value>
+    <value>
+     <fullName>Custom Setting</fullName>
+     <default>false</default>
+     <label>Custom Setting</label>
+    </value>
+    <value>
+     <fullName>Dashboard</fullName>
+     <default>false</default>
+     <label>Dashboard</label>
+    </value>
+    <value>
+     <fullName>Document</fullName>
+     <default>false</default>
+     <label>Document</label>
+    </value>
+    <value>
+     <fullName>Email Template</fullName>
+     <default>false</default>
+     <label>Email Template</label>
+    </value>
+    <value>
+     <fullName>Field</fullName>
+     <default>false</default>
+     <label>Field</label>
+    </value>
+    <value>
+     <fullName>Field Set</fullName>
+     <default>false</default>
+     <label>Field Set</label>
+    </value>
+    <value>
+     <fullName>Group</fullName>
+     <default>false</default>
+     <label>Group</label>
+    </value>
+    <value>
+     <fullName>Home Page Component</fullName>
+     <default>false</default>
+     <label>Home Page Component</label>
+    </value>
+    <value>
+     <fullName>Home Page Layout</fullName>
+     <default>false</default>
+     <label>Home Page Layout</label>
+    </value>
+    <value>
+     <fullName>Label</fullName>
+     <default>false</default>
+     <label>Label</label>
+    </value>
+    <value>
+     <fullName>Layout</fullName>
+     <default>false</default>
+     <label>Layout</label>
+    </value>
+    <value>
+     <fullName>List View</fullName>
+     <default>false</default>
+     <label>List View</label>
+    </value>
+    <value>
+     <fullName>Lookup Filter</fullName>
+     <default>false</default>
+     <label>Lookup Filter</label>
+    </value>
+    <value>
+     <fullName>Object</fullName>
+     <default>false</default>
+     <label>Object</label>
+    </value>
+    <value>
+     <fullName>Object Translation</fullName>
+     <default>false</default>
+     <label>Object Translation</label>
+    </value>
+    <value>
+     <fullName>Package</fullName>
+     <default>false</default>
+     <label>Package</label>
+    </value>
+    <value>
+     <fullName>Password Policy</fullName>
+     <default>false</default>
+     <label>Password Policy</label>
+    </value>
+    <value>
+     <fullName>Permission Set</fullName>
+     <default>false</default>
+     <label>Permission Set</label>
+    </value>
+    <value>
+     <fullName>Profile</fullName>
+     <default>false</default>
+     <label>Profile</label>
+    </value>
+    <value>
+     <fullName>Queue</fullName>
+     <default>false</default>
+     <label>Queue</label>
+    </value>
+    <value>
+     <fullName>Quick Action</fullName>
+     <default>false</default>
+     <label>Quick Action</label>
+    </value>
+    <value>
+     <fullName>Record Type</fullName>
+     <default>false</default>
+     <label>Record Type</label>
+    </value>
+    <value>
+     <fullName>Remote Site Setting</fullName>
+     <default>false</default>
+     <label>Remote Site Setting</label>
+    </value>
+    <value>
+     <fullName>Report</fullName>
+     <default>false</default>
+     <label>Report</label>
+    </value>
+    <value>
+     <fullName>Report Type</fullName>
+     <default>false</default>
+     <label>Report Type</label>
+    </value>
+    <value>
+     <fullName>Role</fullName>
+     <default>false</default>
+     <label>Role</label>
+    </value>
+    <value>
+     <fullName>Search Layout</fullName>
+     <default>false</default>
+     <label>Search Layout</label>
+    </value>
+    <value>
+     <fullName>Standard Button or Link</fullName>
+     <default>false</default>
+     <label>Standard Button or Link</label>
+    </value>
+    <value>
+     <fullName>Static Resource</fullName>
+     <default>false</default>
+     <label>Static Resource</label>
+    </value>
+    <value>
+     <fullName>Validation Rule</fullName>
+     <default>false</default>
+     <label>Validation Rule</label>
+    </value>
+    <value>
+     <fullName>Visualforce Page</fullName>
+     <default>false</default>
+     <label>Visualforce Page</label>
+    </value>
+    <value>
+     <fullName>Visualforce Tab</fullName>
+     <default>false</default>
+     <label>Visualforce Tab</label>
+    </value>
+    <value>
+     <fullName>Custom Page Web Link</fullName>
+     <default>false</default>
+     <label>Custom Page Web Link</label>
+    </value>
+    <value>
+     <fullName>Web Tab</fullName>
+     <default>false</default>
+     <label>Web Tab</label>
+    </value>
+    <value>
+     <fullName>Workflow Default Setting</fullName>
+     <default>false</default>
+     <label>Workflow Default Setting</label>
+    </value>
+    <value>
+     <fullName>Workflow Email Alert</fullName>
+     <default>false</default>
+     <label>Workflow Email Alert</label>
+    </value>
+    <value>
+     <fullName>Workflow Field Update</fullName>
+     <default>false</default>
+     <label>Workflow Field Update</label>
+    </value>
+    <value>
+     <fullName>Workflow Outbound Message</fullName>
+     <default>false</default>
+     <label>Workflow Outbound Message</label>
+    </value>
+    <value>
+     <fullName>Workflow Rule</fullName>
+     <default>false</default>
+     <label>Workflow Rule</label>
+    </value>
+    <value>
+     <fullName>Workflow Task</fullName>
+     <default>false</default>
+     <label>Workflow Task</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <label>Component</label>
+ <listViews>
+  <fullName>All</fullName>
+  <columns>NAME</columns>
+  <columns>Parent_Component__c</columns>
+  <columns>Type__c</columns>
+  <columns>CREATED_DATE</columns>
+  <columns>Deleted__c</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <nameField>
+  <label>Component Name</label>
+  <trackHistory>false</trackHistory>
+  <type>Text</type>
+ </nameField>
+ <pluralLabel>Components</pluralLabel>
+ <recordTypeTrackHistory>false</recordTypeTrackHistory>
+ <recordTypes>
+  <fullName>Salesforce</fullName>
+  <active>true</active>
+  <description>Salesforce specific components.</description>
+  <label>Salesforce</label>
+  <picklistValues>
+   <picklist>Last_Modified_Users__c</picklist>
+   <values>
+    <fullName>Not Available</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Source_Instances__c</picklist>
+   <values>
+    <fullName>Production</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Test</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Type__c</picklist>
+   <values>
+    <fullName>Apex Class</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Apex Trigger</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Application</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Approval Process</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Assignment Rule</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Business Rule</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Component</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Button or Link</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Object Tab</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Page Web Link</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Setting</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Dashboard</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Document</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Email Template</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Field</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Field Set</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Group</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Home Page Component</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Home Page Layout</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Label</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Layout</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>List View</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Lookup Filter</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Object</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Object Translation</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Package</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Password Policy</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Permission Set</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Profile</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Queue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Quick Action</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Record Type</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Remote Site Setting</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Report</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Report Type</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Role</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Search Layout</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Standard Button or Link</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Static Resource</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Validation Rule</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Visualforce Page</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Visualforce Tab</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Web Tab</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Default Setting</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Email Alert</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Field Update</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Outbound Message</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Rule</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Workflow Task</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <searchLayouts>
+  <customTabListAdditionalFields>Parent_Component__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Type__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Deleted__c</customTabListAdditionalFields>
+  <lookupDialogsAdditionalFields>Type__c</lookupDialogsAdditionalFields>
+  <lookupDialogsAdditionalFields>Parent_Component__c</lookupDialogsAdditionalFields>
+  <lookupDialogsAdditionalFields>Deleted__c</lookupDialogsAdditionalFields>
+  <searchResultsAdditionalFields>Type__c</searchResultsAdditionalFields>
+  <searchResultsAdditionalFields>Parent_Component__c</searchResultsAdditionalFields>
+  <searchResultsAdditionalFields>Deleted__c</searchResultsAdditionalFields>
+ </searchLayouts>
+ <sharingModel>ReadWrite</sharingModel>
+ <validationRules>
+  <fullName>Instance_Lookup_Required</fullName>
+  <active>false</active>
+  <description>Require the user to select an Instance record if the field modified data is empty</description>
+  <errorConditionFormula>AND(
+ ISBLANK(Field_Modified_Data__c),
+ !ISPICKVAL(Type__c, 'Apex Unit Test'),
+ !ISPICKVAL(Type__c, 'Apex Class'),
+ !ISPICKVAL(Type__c, 'Apex Trigger'))</errorConditionFormula>
+  <errorDisplayField>Instance__c</errorDisplayField>
+  <errorMessage>You must tie this component record to an Instance.</errorMessage>
+ </validationRules>
+ <visibility>Public</visibility>
+</CustomObject>

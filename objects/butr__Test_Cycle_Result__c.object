@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>butr__Test_Cycle_Result__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <deprecated>false</deprecated>
+ <description>Top level summary object for BUTR testing results.</description>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>butr__Apex_Test_Classes__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>The number of Apex classes with executable test methods.</inlineHelpText>
+  <label>Apex Test Classes</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Area_Coverage__c</fullName>
+  <deprecated>false</deprecated>
+  <description>Percentage of areas that were tested.  Areas can include Apex classes and triggers as well as user defined Selenium areas.  Note that whether the test passed or failed has no bearing on this calculation.</description>
+  <externalId>false</externalId>
+  <formula>IF(butr__Total_Areas__c  = 0, 0,  butr__Areas_Tested__c  /  butr__Total_Areas__c )</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>Percentage of areas that were tested.  Areas can include Apex classes and triggers as well as user defined Selenium areas.  Note that whether the test passed or failed has no bearing on this calculation.</inlineHelpText>
+  <label>Area Coverage</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>butr__Areas_Tested__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <description>Total number of test areas that have been tested.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of test areas that have been tested.</inlineHelpText>
+  <label>Areas Tested</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Code_Coverage__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total code coverage of all Apex classes and triggers.  75% is needed to pass.</inlineHelpText>
+  <label>Code Coverage</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>butr__Cycle_Datetime__c</fullName>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>The date and time of testing.</inlineHelpText>
+  <label>Cycle Datetime</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <fields>
+  <fullName>butr__Details__c</fullName>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Any error messages from testing will get logged in this field.</inlineHelpText>
+  <label>Details</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>5</visibleLines>
+ </fields>
+ <fields>
+  <fullName>butr__Failed_Apex_Test_Classes__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <description>Total number of Apex classes with test methods that failed.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of Apex classes with test methods that failed.</inlineHelpText>
+  <label>Failed Apex Test Classes</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Failed_Scripts__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of failed Apex test classes and failed Selenium suites.</inlineHelpText>
+  <label>Failed Scripts</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Failed_Selenium_Suites__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of failed Selenium test suites.</inlineHelpText>
+  <label>Failed Selenium Suites</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Instance_Name__c</fullName>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>The salesforce.com instance that was tested.</inlineHelpText>
+  <label>Instance Name</label>
+  <length>255</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Result__c</fullName>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <formula>IF(butr__Test_Failures__c = 0, "Pass", 
+ IF(AND(butr__Test_Failures__c = 0, butr__Code_Coverage__c &gt;= 0.75), "Pass", "Fail"
+ )
+)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The overall test result.</inlineHelpText>
+  <label>Result</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Selenium_Areas__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <label>Selenium Areas</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Selenium_Suites__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of Selenium test suites.</inlineHelpText>
+  <label>Selenium Suites</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Success_Rate__c</fullName>
+  <deprecated>false</deprecated>
+  <description>The success percentage of all Apex test methods and Selenium test steps (cases in a suite).</description>
+  <externalId>false</externalId>
+  <formula>IF( butr__Total_Tests__c != 0 , ( butr__Total_Tests__c - butr__Test_Failures__c )  /  butr__Total_Tests__c , NULL)</formula>
+  <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+  <inlineHelpText>The success percentage of all Apex test methods and Selenium test steps (cases in a suite).</inlineHelpText>
+  <label>Success Rate</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Percent</type>
+ </fields>
+ <fields>
+  <fullName>butr__Test_Failures__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>The total number of unit tests and Selenium test cases that failed.</inlineHelpText>
+  <label>Test Failures</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Total_Areas__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of objects that CAN BE tested in an instance.  This can include Apex classes, triggers, and user defined functional areas in Selenium test suites.</inlineHelpText>
+  <label>Total Areas</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Total_Scripts__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of Apex classes with test methods and Selenium test suites that were executed in this cycle.</inlineHelpText>
+  <label>Total Scripts</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Total_Tests__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <inlineHelpText>Total number of unit tests and Selenium test cases executed from all the scripts.</inlineHelpText>
+  <label>Total Tests</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__Total_Time__c</fullName>
+  <defaultValue>0</defaultValue>
+  <deprecated>false</deprecated>
+  <description>The total amount of time to run all tests.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>The total amount of time to run all tests.</inlineHelpText>
+  <label>Total Time</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>butr__VF_Date_Hook__c</fullName>
+  <deprecated>false</deprecated>
+  <externalId>false</externalId>
+  <label>VF Date Hook</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <label>Test Cycle Result</label>
+ <listViews>
+  <fullName>butr__All</fullName>
+  <columns>NAME</columns>
+  <columns>butr__Instance_Name__c</columns>
+  <columns>butr__Result__c</columns>
+  <columns>butr__Area_Coverage__c</columns>
+  <columns>butr__Code_Coverage__c</columns>
+  <columns>butr__Total_Tests__c</columns>
+  <columns>butr__Total_Time__c</columns>
+  <columns>butr__Cycle_Datetime__c</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <nameField>
+  <label>Test Cycle Name</label>
+  <trackHistory>false</trackHistory>
+  <type>Text</type>
+ </nameField>
+ <pluralLabel>Test Cycle Results</pluralLabel>
+ <searchLayouts>
+  <customTabListAdditionalFields>butr__Instance_Name__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>butr__Code_Coverage__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>butr__Total_Tests__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>butr__Test_Failures__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>CREATED_DATE</customTabListAdditionalFields>
+  <searchFilterFields>NAME</searchFilterFields>
+ </searchLayouts>
+ <sharingModel>ReadWrite</sharingModel>
+ <visibility>Public</visibility>
+ <webLinks>
+  <fullName>butr__Mass_Delete_Results</fullName>
+  <availability>online</availability>
+  <displayType>button</displayType>
+  <height>600</height>
+  <linkType>page</linkType>
+  <masterLabel>Mass Delete Results</masterLabel>
+  <openType>noSidebar</openType>
+  <page>butr__DeleteTestCycleResults</page>
+  <protected>false</protected>
+ </webLinks>
+</CustomObject>

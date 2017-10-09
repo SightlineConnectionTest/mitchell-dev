@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+ <fullName>Backlog__c</fullName>
+ <actionOverrides>
+  <actionName>Accept</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>CancelEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Clone</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Delete</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Edit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>List</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>New</actionName>
+  <content>TrackingRedirect_Backlog</content>
+  <skipRecordTypeSelect>false</skipRecordTypeSelect>
+  <type>Visualforce</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>SaveEdit</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>Tab</actionName>
+  <content>BacklogManagement</content>
+  <skipRecordTypeSelect>false</skipRecordTypeSelect>
+  <type>Visualforce</type>
+ </actionOverrides>
+ <actionOverrides>
+  <actionName>View</actionName>
+  <type>Default</type>
+ </actionOverrides>
+ <allowInChatterGroups>false</allowInChatterGroups>
+ <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+ <deploymentStatus>Deployed</deploymentStatus>
+ <description>Represents backlog items which can be features, stories or defects.</description>
+ <enableActivities>true</enableActivities>
+ <enableBulkApi>true</enableBulkApi>
+ <enableChangeDataCapture>false</enableChangeDataCapture>
+ <enableEnhancedLookup>false</enableEnhancedLookup>
+ <enableFeeds>false</enableFeeds>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
+ <enableSharing>true</enableSharing>
+ <enableStreamingApi>true</enableStreamingApi>
+ <fields>
+  <fullName>Blocked__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <inlineHelpText>If the progress of item is blocked.  Not a status or state since we don't want to lose the original value to set it to blocked.</inlineHelpText>
+  <label>Blocked</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Business_Priority__c</fullName>
+  <description>Business Priority for the Defect</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Business Priority must be set by Story Owner or person responsible for defect validation</inlineHelpText>
+  <label>Business Priority</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Critical</fullName>
+     <default>false</default>
+     <label>Critical</label>
+    </value>
+    <value>
+     <fullName>High</fullName>
+     <default>false</default>
+     <label>High</label>
+    </value>
+    <value>
+     <fullName>Medium</fullName>
+     <default>false</default>
+     <label>Medium</label>
+    </value>
+    <value>
+     <fullName>Low</fullName>
+     <default>false</default>
+     <label>Low</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Business_Value__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>This is used to measure the business value.</inlineHelpText>
+  <label>Value</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Closed_Date__c</fullName>
+  <description>Defect Closed on Date/Time</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Date/Time defect's status was set to Closed</inlineHelpText>
+  <label>Closed Date</label>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <fields>
+  <fullName>Current_Sprint__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Sprint</label>
+  <referenceTo>Sprint__c</referenceTo>
+  <relationshipLabel>Backlog Items</relationshipLabel>
+  <relationshipName>Backlog_Items</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Custom_Backlog__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Custom Backlog</label>
+  <referenceTo>Custom_Backlog__c</referenceTo>
+  <relationshipLabel>Backlog Items</relationshipLabel>
+  <relationshipName>Backlog_Items</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Custom_Priority__c</fullName>
+  <externalId>false</externalId>
+  <label>Custom Priority</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Description__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Replication steps for defects, requirements for features and stories.</inlineHelpText>
+  <label>Description</label>
+  <length>32768</length>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Html</type>
+  <visibleLines>15</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Dev_Effort__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>This is used to measure the development effort required to implement a story.  Represents a mix of technical complexity, work time, and even uncertainty bound to a story.  1 point represents a basic configuration change like creating a new field.</inlineHelpText>
+  <label>Dev Effort</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Epic__c</fullName>
+  <defaultValue>false</defaultValue>
+  <externalId>false</externalId>
+  <inlineHelpText>Is this an epic story?</inlineHelpText>
+  <label>Epic</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>Found_in__c</fullName>
+  <description>Capture Found in Source Instance for a defect</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Enter source defect was found in</inlineHelpText>
+  <label>Found in</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Production</fullName>
+     <default>false</default>
+     <label>Production</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Instance__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Instance</label>
+  <referenceTo>Instances__c</referenceTo>
+  <relationshipLabel>Backlog Items</relationshipLabel>
+  <relationshipName>Backlog</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>JIRA_Error__c</fullName>
+  <description>Stores any JIRA integration errors</description>
+  <externalId>false</externalId>
+  <label>JIRA error</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>LongTextArea</type>
+  <visibleLines>3</visibleLines>
+ </fields>
+ <fields>
+  <fullName>JIRA_Integrate__c</fullName>
+  <defaultValue>false</defaultValue>
+  <description>When checked, this record will get picked up by the JIRA integration.</description>
+  <externalId>false</externalId>
+  <inlineHelpText>When checked, this record will get picked up by the JIRA integration.</inlineHelpText>
+  <label>JIRA Integrate</label>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Checkbox</type>
+ </fields>
+ <fields>
+  <fullName>JIRA_Key__c</fullName>
+  <description>The unique issue key in JIRA</description>
+  <externalId>true</externalId>
+  <inlineHelpText>The unique issue key in JIRA</inlineHelpText>
+  <label>JIRA Key</label>
+  <length>100</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>JIRA_Last_Sync_Time__c</fullName>
+  <externalId>false</externalId>
+  <label>JIRA Last Sync Time</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <fields>
+  <fullName>Parent_User_Story__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <inlineHelpText>The parent user story this story is related to.</inlineHelpText>
+  <label>Parent User Story</label>
+  <referenceTo>Backlog__c</referenceTo>
+  <relationshipLabel>Related User Stories</relationshipLabel>
+  <relationshipName>Backlogs</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Persona__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <description>Indicate the persona, which gives the user's perspective.  Who is it that wants/needs this story to be implemented</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Indicate the persona, which gives the user's perspective.  Who is it that wants/needs this story to be implemented</inlineHelpText>
+  <label>As a(n)</label>
+  <referenceTo>Persona__c</referenceTo>
+  <relationshipName>Stories</relationshipName>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Priority__c</fullName>
+  <externalId>false</externalId>
+  <label>Priority</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>0</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Project__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Project</label>
+  <referenceTo>Project__c</referenceTo>
+  <relationshipLabel>Backlog Items</relationshipLabel>
+  <relationshipName>Backlog</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>QA_Effort__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>This is used to measure the QA effort needed to test the solution to implement the user story or to resolve the defect.</inlineHelpText>
+  <label>QA Effort</label>
+  <precision>18</precision>
+  <required>false</required>
+  <scale>2</scale>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Number</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Release_Priority__c</fullName>
+  <externalId>false</externalId>
+  <label>Release Priority</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Low</fullName>
+     <default>false</default>
+     <label>Low</label>
+    </value>
+    <value>
+     <fullName>Medium</fullName>
+     <default>false</default>
+     <label>Medium</label>
+    </value>
+    <value>
+     <fullName>High</fullName>
+     <default>false</default>
+     <label>High</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Release__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Release</label>
+  <referenceTo>Release__c</referenceTo>
+  <relationshipLabel>Backlog Items</relationshipLabel>
+  <relationshipName>Backlog</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Resolved_Date__c</fullName>
+  <description>Defect Resolved on Date/Time</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Value in this field will be set when Status is changed to Resolved</inlineHelpText>
+  <label>Resolved Date</label>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>DateTime</type>
+ </fields>
+ <fields>
+  <fullName>Root_Cause__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Root Cause Analysis</inlineHelpText>
+  <label>Root Cause</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Code Fix</fullName>
+     <default>false</default>
+     <label>Code Fix</label>
+    </value>
+    <value>
+     <fullName>Configuration Issue</fullName>
+     <default>false</default>
+     <label>Configuration Issue</label>
+    </value>
+    <value>
+     <fullName>Custom Code Issue</fullName>
+     <default>false</default>
+     <label>Custom Code Issue</label>
+    </value>
+    <value>
+     <fullName>Enhancement</fullName>
+     <default>false</default>
+     <label>Enhancement</label>
+    </value>
+    <value>
+     <fullName>Deployment Issue</fullName>
+     <default>false</default>
+     <label>Deployment Issue</label>
+    </value>
+    <value>
+     <fullName>Environmental</fullName>
+     <default>false</default>
+     <label>Environmental</label>
+    </value>
+    <value>
+     <fullName>3rd Party Software Fix</fullName>
+     <default>false</default>
+     <label>3rd Party Software Fix</label>
+    </value>
+    <value>
+     <fullName>Data Issue</fullName>
+     <default>false</default>
+     <label>Data Issue</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Severity__c</fullName>
+  <description>Severity of the Defect</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Blocker – blocks further testing
+Critical – affects critical functionality/data. No workaround.
+High – affects major functionality/data
+Medium – affects minor functionality/data
+Low – doesn't affect functionality/data</inlineHelpText>
+  <label>Severity</label>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>Blocker</fullName>
+     <default>false</default>
+     <label>Blocker</label>
+    </value>
+    <value>
+     <fullName>Critical</fullName>
+     <default>false</default>
+     <label>Critical</label>
+    </value>
+    <value>
+     <fullName>High</fullName>
+     <default>false</default>
+     <label>High</label>
+    </value>
+    <value>
+     <fullName>Medium</fullName>
+     <default>false</default>
+     <label>Medium</label>
+    </value>
+    <value>
+     <fullName>Low</fullName>
+     <default>false</default>
+     <label>Low</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>So_that__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Tell why the need is important to the user.  Should represent some business value (save time, save money, easier to use, less clicks, et al).  Basically, justify the need.</inlineHelpText>
+  <label>So that</label>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>TextArea</type>
+ </fields>
+ <fields>
+  <fullName>Solution__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>Design consideration and solution notes.</inlineHelpText>
+  <label>Solution</label>
+  <length>32768</length>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Html</type>
+  <visibleLines>15</visibleLines>
+ </fields>
+ <fields>
+  <fullName>Status__c</fullName>
+  <externalId>false</externalId>
+  <inlineHelpText>The status should indicate the stage in the life of a backlog item from inception to completion.</inlineHelpText>
+  <label>Status</label>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Picklist</type>
+  <valueSet>
+   <valueSetDefinition>
+    <sorted>false</sorted>
+    <value>
+     <fullName>New</fullName>
+     <default>true</default>
+     <label>New</label>
+    </value>
+    <value>
+     <fullName>Open</fullName>
+     <default>false</default>
+     <label>Open</label>
+    </value>
+    <value>
+     <fullName>Needs Requirements</fullName>
+     <default>false</default>
+     <label>Needs Requirements</label>
+    </value>
+    <value>
+     <fullName>Needs Solution</fullName>
+     <default>false</default>
+     <label>Needs Solution</label>
+    </value>
+    <value>
+     <fullName>Dev Ready</fullName>
+     <default>false</default>
+     <label>Dev Ready</label>
+    </value>
+    <value>
+     <fullName>In-Progress</fullName>
+     <default>false</default>
+     <label>In-Progress</label>
+    </value>
+    <value>
+     <fullName>Dev Complete</fullName>
+     <default>false</default>
+     <label>Dev Complete</label>
+    </value>
+    <value>
+     <fullName>Build Ready</fullName>
+     <default>false</default>
+     <label>Build Ready</label>
+    </value>
+    <value>
+     <fullName>QA Ready</fullName>
+     <default>false</default>
+     <label>QA Ready</label>
+    </value>
+    <value>
+     <fullName>QA Accepted</fullName>
+     <default>false</default>
+     <label>QA Accepted</label>
+    </value>
+    <value>
+     <fullName>Reopened</fullName>
+     <default>false</default>
+     <label>Reopened</label>
+    </value>
+    <value>
+     <fullName>Rejected</fullName>
+     <default>false</default>
+     <label>Rejected</label>
+    </value>
+    <value>
+     <fullName>Deferred</fullName>
+     <default>false</default>
+     <label>Deferred</label>
+    </value>
+    <value>
+     <fullName>Closed</fullName>
+     <default>false</default>
+     <label>Closed</label>
+    </value>
+    <value>
+     <fullName>Defect Resolution</fullName>
+     <default>false</default>
+     <label>Defect Resolution</label>
+    </value>
+    <value>
+     <fullName>UAT Accepted</fullName>
+     <default>false</default>
+     <label>UAT Accepted</label>
+    </value>
+    <value>
+     <fullName>Released</fullName>
+     <default>false</default>
+     <label>Released</label>
+    </value>
+    <value>
+     <fullName>Resolved</fullName>
+     <default>false</default>
+     <label>Resolved</label>
+    </value>
+   </valueSetDefinition>
+  </valueSet>
+ </fields>
+ <fields>
+  <fullName>Summary__c</fullName>
+  <description>Short summary of the backlog item</description>
+  <externalId>false</externalId>
+  <inlineHelpText>Enter a short summary of the backlog item</inlineHelpText>
+  <label>Title</label>
+  <length>255</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>Test_Description__c</fullName>
+  <externalId>false</externalId>
+  <label>Test Description</label>
+  <length>244</length>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Text</type>
+  <unique>false</unique>
+ </fields>
+ <fields>
+  <fullName>User_Goal__c</fullName>
+  <description>This tells what the user wants to do.  What is their goal?  This is not for capturing WHY - that is in another field</description>
+  <externalId>false</externalId>
+  <inlineHelpText>This tells what the user wants to do.  What is their goal?  This is not for capturing WHY - that is in another field</inlineHelpText>
+  <label>I need</label>
+  <required>false</required>
+  <trackHistory>true</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>TextArea</type>
+ </fields>
+ <fields>
+  <fullName>User_Story__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <inlineHelpText>The user story that the defect is associated to.</inlineHelpText>
+  <label>User Story</label>
+  <referenceTo>Backlog__c</referenceTo>
+  <relationshipLabel>Defects</relationshipLabel>
+  <relationshipName>Backlog</relationshipName>
+  <required>false</required>
+  <trackHistory>false</trackHistory>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <label>Backlog Item</label>
+ <listViews>
+  <fullName>All</fullName>
+  <columns>NAME</columns>
+  <columns>RECORDTYPE</columns>
+  <columns>LAST_UPDATE</columns>
+  <columns>Status__c</columns>
+  <columns>CREATED_DATE</columns>
+  <columns>OWNER.LAST_NAME</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <listViews>
+  <fullName>Defects</fullName>
+  <columns>NAME</columns>
+  <columns>Status__c</columns>
+  <columns>OWNER.LAST_NAME</columns>
+  <columns>Business_Value__c</columns>
+  <columns>Dev_Effort__c</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+   <field>RECORDTYPE</field>
+   <operation>equals</operation>
+   <value>Backlog__c.Defect</value>
+  </filters>
+  <filters>
+   <field>Status__c</field>
+   <operation>notEqual</operation>
+   <value>Completed - No Sprint,Accepted,Rejected</value>
+  </filters>
+  <label>Defects</label>
+ </listViews>
+ <listViews>
+  <fullName>High_Priority</fullName>
+  <columns>NAME</columns>
+  <columns>Business_Value__c</columns>
+  <columns>RECORDTYPE</columns>
+  <filterScope>Everything</filterScope>
+  <label>High Priority</label>
+ </listViews>
+ <listViews>
+  <fullName>New_Entries</fullName>
+  <columns>NAME</columns>
+  <columns>RECORDTYPE</columns>
+  <columns>CREATEDBY_USER</columns>
+  <columns>CREATED_DATE</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+   <field>Status__c</field>
+   <operation>equals</operation>
+   <value>New</value>
+  </filters>
+  <label>New Entries</label>
+ </listViews>
+ <listViews>
+  <fullName>New_Items</fullName>
+  <columns>NAME</columns>
+  <columns>Epic__c</columns>
+  <columns>RECORDTYPE</columns>
+  <columns>OWNER.LAST_NAME</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+   <field>Status__c</field>
+   <operation>equals</operation>
+   <value>New</value>
+  </filters>
+  <label>New Items</label>
+ </listViews>
+ <listViews>
+  <fullName>Stories</fullName>
+  <columns>NAME</columns>
+  <columns>Status__c</columns>
+  <columns>Business_Value__c</columns>
+  <columns>User_Goal__c</columns>
+  <columns>So_that__c</columns>
+  <columns>OWNER.LAST_NAME</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+   <field>RECORDTYPE</field>
+   <operation>equals</operation>
+   <value>Backlog__c.Story</value>
+  </filters>
+  <filters>
+   <field>Status__c</field>
+   <operation>equals</operation>
+   <value>Needs Requirements,Requirements Defined,Needs Solution,Sprint Ready</value>
+  </filters>
+  <filters>
+   <field>Epic__c</field>
+   <operation>equals</operation>
+   <value>0</value>
+  </filters>
+  <label>Stories</label>
+ </listViews>
+ <listViews>
+  <fullName>Untyped</fullName>
+  <columns>NAME</columns>
+  <filterScope>Everything</filterScope>
+  <filters>
+   <field>RECORDTYPE</field>
+   <operation>equals</operation>
+  </filters>
+  <label>Untyped</label>
+ </listViews>
+ <listViews>
+  <fullName>premQueue_Backlog</fullName>
+  <filterScope>Queue</filterScope>
+  <label>premQueue</label>
+  <queue>premQueue</queue>
+  <sharedTo>
+   <allInternalUsers/>
+  </sharedTo>
+ </listViews>
+ <listViews>
+  <fullName>testQUEUE_Backlog</fullName>
+  <filterScope>Queue</filterScope>
+  <label>testQUEUE</label>
+  <queue>testQUEUE</queue>
+  <sharedTo>
+   <allInternalUsers/>
+  </sharedTo>
+ </listViews>
+ <nameField>
+  <displayFormat>Item-{00000}</displayFormat>
+  <label>Key</label>
+  <trackHistory>false</trackHistory>
+  <type>AutoNumber</type>
+ </nameField>
+ <pluralLabel>Backlog Items</pluralLabel>
+ <recordTypeTrackHistory>false</recordTypeTrackHistory>
+ <recordTypes>
+  <fullName>Defect</fullName>
+  <active>true</active>
+  <description>A bug or an issue related to an implemented story.</description>
+  <label>Defect</label>
+  <picklistValues>
+   <picklist>Business_Priority__c</picklist>
+   <values>
+    <fullName>Critical</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Found_in__c</picklist>
+   <values>
+    <fullName>Production</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Release_Priority__c</picklist>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Root_Cause__c</picklist>
+   <values>
+    <fullName>3rd Party Software Fix</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Code Fix</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Configuration Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Code Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Data Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Deployment Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Enhancement</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Environmental</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Severity__c</picklist>
+   <values>
+    <fullName>Blocker</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Critical</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Status__c</picklist>
+   <values>
+    <fullName>Build Ready</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Closed</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Deferred</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>In-Progress</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>New</fullName>
+    <default>true</default>
+   </values>
+   <values>
+    <fullName>Open</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>QA Accepted</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>QA Ready</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Rejected</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Reopened</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <recordTypes>
+  <fullName>Story</fullName>
+  <active>true</active>
+  <description>A short, simple description of a feature told from the perspective of the person who desires the new capability.</description>
+  <label>Story</label>
+  <picklistValues>
+   <picklist>Business_Priority__c</picklist>
+   <values>
+    <fullName>Critical</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Found_in__c</picklist>
+   <values>
+    <fullName>Production</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Release_Priority__c</picklist>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Root_Cause__c</picklist>
+   <values>
+    <fullName>3rd Party Software Fix</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Code Fix</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Configuration Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Custom Code Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Data Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Deployment Issue</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Enhancement</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Environmental</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Severity__c</picklist>
+   <values>
+    <fullName>Blocker</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Critical</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>High</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Low</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Medium</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+  <picklistValues>
+   <picklist>Status__c</picklist>
+   <values>
+    <fullName>Build Ready</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Defect Resolution</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Dev Complete</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Dev Ready</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>In-Progress</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Needs Requirements</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Needs Solution</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>New</fullName>
+    <default>true</default>
+   </values>
+   <values>
+    <fullName>QA Accepted</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>QA Ready</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Rejected</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>Released</fullName>
+    <default>false</default>
+   </values>
+   <values>
+    <fullName>UAT Accepted</fullName>
+    <default>false</default>
+   </values>
+  </picklistValues>
+ </recordTypes>
+ <searchLayouts>
+  <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Persona__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>User_Goal__c</customTabListAdditionalFields>
+  <customTabListAdditionalFields>Summary__c</customTabListAdditionalFields>
+  <listViewButtons>Manage_Backlog</listViewButtons>
+ </searchLayouts>
+ <sharingModel>ReadWrite</sharingModel>
+ <visibility>Public</visibility>
+ <webLinks>
+  <fullName>Manage_Backlog</fullName>
+  <availability>online</availability>
+  <displayType>massActionButton</displayType>
+  <height>600</height>
+  <linkType>page</linkType>
+  <masterLabel>Manage Backlog</masterLabel>
+  <openType>sidebar</openType>
+  <page>BacklogManagement</page>
+  <protected>false</protected>
+  <requireRowSelection>true</requireRowSelection>
+ </webLinks>
+</CustomObject>

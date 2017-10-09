@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
- <fullName>SSH_Keypair__c</fullName>
+ <fullName>Test_Step__c</fullName>
  <actionOverrides>
   <actionName>Accept</actionName>
   <type>Default</type>
@@ -44,61 +44,62 @@
  <allowInChatterGroups>false</allowInChatterGroups>
  <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
  <deploymentStatus>Deployed</deploymentStatus>
- <enableActivities>false</enableActivities>
+ <description>Either a unit test in an Apex test class or a test step in a test script.</description>
+ <enableActivities>true</enableActivities>
  <enableBulkApi>true</enableBulkApi>
  <enableChangeDataCapture>false</enableChangeDataCapture>
  <enableFeeds>false</enableFeeds>
- <enableHistory>false</enableHistory>
- <enableReports>false</enableReports>
- <enableSearch>false</enableSearch>
+ <enableHistory>true</enableHistory>
+ <enableReports>true</enableReports>
+ <enableSearch>true</enableSearch>
  <enableSharing>true</enableSharing>
  <enableStreamingApi>true</enableStreamingApi>
  <fields>
-  <fullName>Passphrase__c</fullName>
-  <description>A passphrase used to encrypt/decrypt SSH keys.</description>
+  <fullName>Expected_Result__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>A passphrase used to encrypt/decrypt SSH keys.</inlineHelpText>
-  <label>Passphrase</label>
-  <length>255</length>
-  <required>false</required>
-  <trackTrending>false</trackTrending>
-  <type>Text</type>
-  <unique>false</unique>
- </fields>
- <fields>
-  <fullName>Private_Key__c</fullName>
-  <description>An encrypted SSH private key.</description>
-  <externalId>false</externalId>
-  <inlineHelpText>An encrypted SSH private key.</inlineHelpText>
-  <label>Private Key</label>
+  <inlineHelpText>The expected outcome of the step action.</inlineHelpText>
+  <label>Expected Result</label>
   <length>32768</length>
+  <trackHistory>false</trackHistory>
   <trackTrending>false</trackTrending>
   <type>LongTextArea</type>
   <visibleLines>3</visibleLines>
  </fields>
  <fields>
-  <fullName>Public_Key__c</fullName>
-  <description>An encrypted SSH public key.</description>
+  <fullName>Step_Action_s__c</fullName>
   <externalId>false</externalId>
-  <inlineHelpText>An encrypted SSH public key.</inlineHelpText>
-  <label>Public Key</label>
+  <inlineHelpText>The action to take.</inlineHelpText>
+  <label>Step Action(s)</label>
   <length>32768</length>
+  <trackHistory>false</trackHistory>
   <trackTrending>false</trackTrending>
   <type>LongTextArea</type>
-  <visibleLines>3</visibleLines>
+  <visibleLines>10</visibleLines>
  </fields>
- <label>SSH Keypair</label>
+ <label>Test Step</label>
  <listViews>
   <fullName>All</fullName>
+  <columns>Expected_Result__c</columns>
+  <columns>NAME</columns>
+  <columns>Step_Action_s__c</columns>
+  <filterScope>Everything</filterScope>
+  <label>All</label>
+ </listViews>
+ <listViews>
+  <fullName>All1</fullName>
   <filterScope>Everything</filterScope>
   <label>All</label>
  </listViews>
  <nameField>
-  <label>SSH Keypair Name</label>
-  <type>Text</type>
+  <displayFormat>TestStep-{00000}</displayFormat>
+  <label>Test Step</label>
+  <trackHistory>false</trackHistory>
+  <type>AutoNumber</type>
  </nameField>
- <pluralLabel>SSH Keypairs</pluralLabel>
- <searchLayouts/>
+ <pluralLabel>Test Steps</pluralLabel>
+ <searchLayouts>
+  <lookupDialogsAdditionalFields>Step_Action_s__c</lookupDialogsAdditionalFields>
+ </searchLayouts>
  <sharingModel>ReadWrite</sharingModel>
  <visibility>Public</visibility>
 </CustomObject>

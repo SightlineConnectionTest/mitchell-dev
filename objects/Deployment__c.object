@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
- <fullName>Sprint__c</fullName>
+ <fullName>Deployment__c</fullName>
  <actionOverrides>
   <actionName>Accept</actionName>
   <type>Default</type>
@@ -39,29 +39,58 @@
  </actionOverrides>
  <actionOverrides>
   <actionName>View</actionName>
-  <content>Sprint</content>
-  <skipRecordTypeSelect>false</skipRecordTypeSelect>
-  <type>Visualforce</type>
+  <type>Default</type>
  </actionOverrides>
  <allowInChatterGroups>false</allowInChatterGroups>
  <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
  <deploymentStatus>Deployed</deploymentStatus>
+ <description>Represents an overall deployment of metadata components.</description>
  <enableActivities>false</enableActivities>
  <enableBulkApi>true</enableBulkApi>
  <enableChangeDataCapture>false</enableChangeDataCapture>
  <enableFeeds>false</enableFeeds>
  <enableHistory>false</enableHistory>
- <enableReports>true</enableReports>
+ <enableReports>false</enableReports>
  <enableSearch>true</enableSearch>
  <enableSharing>true</enableSharing>
  <enableStreamingApi>true</enableStreamingApi>
  <fields>
-  <fullName>End_Date__c</fullName>
+  <fullName>Build__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <description>The latest build for this deployment</description>
   <externalId>false</externalId>
-  <label>End Date</label>
+  <inlineHelpText>The latest build for this deployment</inlineHelpText>
+  <label>Build</label>
+  <referenceTo>Build__c</referenceTo>
+  <relationshipLabel>Deployments</relationshipLabel>
+  <relationshipName>Deployments</relationshipName>
   <required>false</required>
   <trackTrending>false</trackTrending>
-  <type>Date</type>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Completed_Build__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Completed Build</label>
+  <referenceTo>Build__c</referenceTo>
+  <relationshipLabel>Deployments (Completed Build)</relationshipLabel>
+  <relationshipName>Deployments1</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
+ </fields>
+ <fields>
+  <fullName>Deployment_Attempt__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
+  <externalId>false</externalId>
+  <label>Deployment Attempt</label>
+  <referenceTo>Deployment_Attempt__c</referenceTo>
+  <relationshipLabel>Deployments</relationshipLabel>
+  <relationshipName>Deployments</relationshipName>
+  <required>false</required>
+  <trackTrending>false</trackTrending>
+  <type>Lookup</type>
  </fields>
  <fields>
   <fullName>Release__c</fullName>
@@ -69,66 +98,43 @@
   <externalId>false</externalId>
   <label>Release</label>
   <referenceTo>Release__c</referenceTo>
-  <relationshipLabel>Sprints</relationshipLabel>
-  <relationshipName>Sprints</relationshipName>
+  <relationshipLabel>Deployments</relationshipLabel>
+  <relationshipName>Deployments</relationshipName>
   <required>false</required>
   <trackTrending>false</trackTrending>
   <type>Lookup</type>
  </fields>
  <fields>
-  <fullName>Start_Date__c</fullName>
+  <fullName>Source__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
   <externalId>false</externalId>
-  <label>Start Date</label>
+  <label>Source</label>
+  <referenceTo>Instances__c</referenceTo>
+  <relationshipLabel>Deployments</relationshipLabel>
+  <relationshipName>Deployments_Source</relationshipName>
   <required>false</required>
   <trackTrending>false</trackTrending>
-  <type>Date</type>
+  <type>Lookup</type>
  </fields>
  <fields>
-  <fullName>Status__c</fullName>
+  <fullName>Target__c</fullName>
+  <deleteConstraint>SetNull</deleteConstraint>
   <externalId>false</externalId>
-  <label>Status</label>
+  <label>Target</label>
+  <referenceTo>Instances__c</referenceTo>
+  <relationshipLabel>Deployments (Target)</relationshipLabel>
+  <relationshipName>Deployments_Target</relationshipName>
   <required>false</required>
   <trackTrending>false</trackTrending>
-  <type>Picklist</type>
-  <valueSet>
-   <valueSetDefinition>
-    <sorted>false</sorted>
-    <value>
-     <fullName>Not Started</fullName>
-     <default>false</default>
-     <label>Not Started</label>
-    </value>
-    <value>
-     <fullName>In Progress</fullName>
-     <default>false</default>
-     <label>In Progress</label>
-    </value>
-    <value>
-     <fullName>Completed</fullName>
-     <default>false</default>
-     <label>Completed</label>
-    </value>
-   </valueSetDefinition>
-  </valueSet>
+  <type>Lookup</type>
  </fields>
- <label>Sprint</label>
- <listViews>
-  <fullName>All</fullName>
-  <filterScope>Everything</filterScope>
-  <label>All</label>
- </listViews>
+ <label>Deployment</label>
  <nameField>
-  <label>Sprint Name</label>
+  <label>Deployment Name</label>
   <type>Text</type>
  </nameField>
- <pluralLabel>Sprints</pluralLabel>
+ <pluralLabel>Deployments</pluralLabel>
  <searchLayouts/>
  <sharingModel>ReadWrite</sharingModel>
- <validationRules>
-  <fullName>Start_and_End_Dates</fullName>
-  <active>true</active>
-  <errorConditionFormula>Start_Date__c  &gt;  End_Date__c</errorConditionFormula>
-  <errorMessage>The end date cannot be before the start date.</errorMessage>
- </validationRules>
  <visibility>Public</visibility>
 </CustomObject>
